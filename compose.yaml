@@ -57,6 +57,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       AIRFLOW_DATABASE_PASSWORD: ${AIRFLOW_DATABASE_PASSWORD:-airflow}
+      READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/pg-init-user-db.sh:/docker-entrypoint-initdb.d/pg-init-user-db.sh
@@ -73,6 +74,7 @@ services:
     environment:
       CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD:-default}
       FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
+      READER_WAREHOUSE_PASSWORD: ${READER_WAREHOUSE_PASSWORD:-reader}
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
     volumes:
       - clickhouse_data:/var/lib/clickhouse
