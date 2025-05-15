@@ -1,0 +1,122 @@
+name: fleet
+
+
+channels:
+  - conda-forge
+  - defaults
+
+
+dependencies:
+  - python=3.12
+  - pip
+
+  - numpy
+  - scipy
+
+  - pandas
+  - numexpr
+  - pyarrow
+  - polars
+
+  - matplotlib
+  - seaborn
+  - pillow
+
+  - scikit-learn
+  - category_encoders
+  - statsmodels
+  - umap-learn
+
+  - py-xgboost
+  - lightgbm
+  - optuna
+  - joblib
+
+  - nltk
+  - scikit-image
+  - opencv
+
+  - psycopg2
+  - sqlalchemy
+  - pgvector
+  - python-duckdb
+  - clickhouse-driver
+
+  - pyspark
+
+  - airflow
+  - apache-airflow-task-sdk
+  - apache-airflow-providers-postgres
+  - apache-airflow-providers-redis
+  - apache-airflow-providers-amazon
+
+  - ipython
+  - jupyter
+  - nbdime
+  - jupysql
+  - duckdb-engine
+
+#  - faiss
+  - pynndescent
+#  - qdrant-client
+#  - chromadb
+
+  - cython
+  - einops
+  - boltons
+  - cachetools
+  - platformdirs
+  - python-graphviz
+#  - pydot
+  - rbloom
+  - numba
+  - tqdm
+  - rich
+  - psutil
+
+  - imageio
+  - ffmpeg
+  - h5py
+  - redis-py
+  - hiredis
+  - gdown
+  - s3fs
+
+  - kaggle
+  - conda-tree
+  - pipdeptree
+  - python-dotenv
+
+#  - dython
+#  - sweetviz
+  - folium
+
+  - beautifulsoup4
+  - lxml
+
+#  - wandb
+  - mlflow
+#  - label-studio-sdk
+
+  - attrs
+  - pydantic
+  - fastapi
+  - uvicorn
+
+  - docker-py
+
+  - flask
+  - jinja2
+  - gunicorn
+  - requests
+  - httpx
+  - retryhttp
+  - gevent
+  - pyzmq
+  - click
+  - rq
+
+  - flit
+
+  - pip:
+    - airflow-clickhouse-plugin

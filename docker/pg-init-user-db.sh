@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+    CREATE USER fleet WITH PASSWORD '$FLEET_DATABASE_PASSWORD';
+    CREATE USER airflow WITH PASSWORD '$AIRFLOW_DATABASE_PASSWORD';
+
+    CREATE DATABASE fleet;
+    CREATE DATABASE airflow;
+
+    GRANT ALL PRIVILEGES ON DATABASE fleet TO fleet;
+    GRANT ALL PRIVILEGES ON DATABASE airflow TO airflow;
+
+    \c fleet
+    GRANT ALL PRIVILEGES ON SCHEMA public TO fleet;
+    \c airflow
+    GRANT ALL PRIVILEGES ON SCHEMA public TO airflow;
+EOSQL

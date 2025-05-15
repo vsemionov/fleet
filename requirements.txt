@@ -1,0 +1,4 @@
+click
+pyspark
+requests
+tqdm
