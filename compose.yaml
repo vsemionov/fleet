@@ -10,14 +10,6 @@ x-common:
     interval: 30s
     retries: 5
 
-x-spark-common:
-  &spark-common
-  <<: *common
-  image: spark:3.5.5
-  healthcheck:
-    &spark-common-healthcheck
-    <<: *common-healthcheck
-
 x-airflow-common:
   &airflow-common
   <<: *common
@@ -44,6 +36,14 @@ x-airflow-common:
     start_period: 60s
     interval: 60s
     retries: 5
+
+x-spark-common:
+  &spark-common
+  <<: *common
+  image: spark:3.5.5
+  healthcheck:
+    &spark-common-healthcheck
+    <<: *common-healthcheck
 
 
 services:
@@ -87,32 +87,6 @@ services:
       <<: *common-healthcheck
       test: timeout 5 wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1
 
-  spark:
-    <<: *spark-common
-    command: /opt/spark/sbin/start-master.sh
-    environment:
-      SPARK_NO_DAEMONIZE: 1
-    ports:
-      - '127.0.0.1:8080:8080'
-      - '127.0.0.1:7077:7077'
-    hostname: spark
-    healthcheck:
-      <<: *spark-common-healthcheck
-      test: timeout 5 curl -f -sS http://localhost:8080/ >/dev/null || exit 1
-
-  spark-worker:
-    <<: *spark-common
-    command: /opt/spark/sbin/start-worker.sh spark://spark:7077
-    environment:
-      SPARK_NO_DAEMONIZE: 1
-      SPARK_WORKER_MEMORY: 1G
-      SPARK_WORKER_CORES: 1
-    hostname: spark-worker
-    healthcheck:
-      <<: *spark-common-healthcheck
-      test: timeout 5 curl -f -sS http://localhost:8081/ >/dev/null || exit 1
-    scale: 4
-
   airflow:
     <<: *airflow-common
     command: api-server
@@ -149,6 +123,32 @@ services:
     healthcheck:
       <<: *airflow-common-healthcheck
       test: timeout 10 airflow jobs check --job-type DagProcessorJob --local >/dev/null || exit 1
+
+  spark:
+    <<: *spark-common
+    command: /opt/spark/sbin/start-master.sh
+    environment:
+      SPARK_NO_DAEMONIZE: 1
+    ports:
+      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:7077:7077'
+    hostname: spark
+    healthcheck:
+      <<: *spark-common-healthcheck
+      test: timeout 5 curl -f -sS http://localhost:8080/ >/dev/null || exit 1
+
+  spark-worker:
+    <<: *spark-common
+    command: /opt/spark/sbin/start-worker.sh spark://spark:7077
+    environment:
+      SPARK_NO_DAEMONIZE: 1
+      SPARK_WORKER_MEMORY: 1G
+      SPARK_WORKER_CORES: 1
+    hostname: spark-worker
+    healthcheck:
+      <<: *spark-common-healthcheck
+      test: timeout 5 curl -f -sS http://localhost:8081/ >/dev/null || exit 1
+    scale: 4
 
 
 volumes:
