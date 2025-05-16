@@ -14,6 +14,7 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
 
     \c fleet
     GRANT ALL PRIVILEGES ON SCHEMA public TO fleet;
+    SET ROLE fleet;
     ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO reader;
     \c airflow
     GRANT ALL PRIVILEGES ON SCHEMA public TO airflow;

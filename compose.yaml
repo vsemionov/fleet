@@ -6,47 +6,44 @@ x-common:
   healthcheck:
     &common-healthcheck
     start_period: 30s
+    start_interval: 5s
     interval: 30s
-    retries: 5
-
-x-airflow-common:
-  &airflow-common
-  <<: *common
-  image: bitnami/airflow:3.0.1
-  environment:
-    &airflow-common-env
-    AIRFLOW_DATABASE_HOST: postgres
-    AIRFLOW_DATABASE_NAME: airflow
-    AIRFLOW_DATABASE_USERNAME: airflow
-    AIRFLOW_DATABASE_PASSWORD: ${AIRFLOW_DATABASE_PASSWORD:-airflow}
-    AIRFLOW_APISERVER_HOST: airflow
-    AIRFLOW_EXECUTOR: LocalExecutor
-    AIRFLOW_LOAD_EXAMPLES: no
-    AIRFLOW_USERNAME: ${AIRFLOW_USERNAME:-airflow}
-    AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD:-airflow}
-    AIRFLOW_FIRSTNAME: Airflow
-    AIRFLOW_LASTNAME: Admin
-    AIRFLOW_EMAIL: user@example.com
-    FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
-    FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
-  volumes:
-    - ./dags:/opt/bitnami/airflow/dags
-    - ./docker/requirements.txt:/bitnami/python/requirements.txt
-  depends_on:
-    - postgres
-  healthcheck:
-    &airflow-common-healthcheck
-    start_period: 60s
-    interval: 60s
     retries: 5
 
 x-spark-common:
   &spark-common
   <<: *common
-  image: bitnami/spark:3.5.5
+  image: spark:3.5.5
   healthcheck:
     &spark-common-healthcheck
     <<: *common-healthcheck
+
+x-airflow-common:
+  &airflow-common
+  <<: *common
+  image: apache/airflow:3.0.1
+  environment:
+    &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:${AIRFLOW_DATABASE_PASSWORD:-airflow}@postgres/airflow
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow:8080/execution/'
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY:-}
+    AIRFLOW__CORE__INTERNAL_API_SECRET_KEY: ${AIRFLOW_API_SECRET_KEY:-airflow-core-internal-api-secret-key}
+    AIRFLOW__WEBSERVER__SECRET_KEY: ${AIRFLOW_WWW_SECRET_KEY:-airflow-webserver-secret-key}
+    AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_KEY:-airflow-api-auth-jwt-secret}
+    CONNECTION_CHECK_MAX_COUNT: 100
+    CONNECTION_CHECK_SLEEP_TIME: 5
+    _PIP_ADDITIONAL_REQUIREMENTS: ${AIRFLOW_REQUIREMENTS:-}
+  volumes:
+    - ./dags:/opt/airflow/dags
+  healthcheck:
+    &airflow-common-healthcheck
+    start_period: 60s
+    interval: 60s
+    retries: 5
 
 
 services:
@@ -60,13 +57,13 @@ services:
       READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./docker/pg-init-user-db.sh:/docker-entrypoint-initdb.d/pg-init-user-db.sh
+      - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/init.sh
     ports:
       - '127.0.0.1:5432:5432'
     hostname: postgres
     healthcheck:
       <<: *common-healthcheck
-      test: pg_isready -t 5 -h localhost -U postgres >/dev/null || exit 1
+      test: timeout 5 pg_isready -h localhost -U postgres >/dev/null || exit 1
 
   clickhouse:
     <<: *common
@@ -78,8 +75,8 @@ services:
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
     volumes:
       - clickhouse_data:/var/lib/clickhouse
-      - ./docker/ch-conf.xml:/etc/clickhouse-server/config.d/ch-conf.xml
-      - ./docker/ch-init-user-db.sh:/docker-entrypoint-initdb.d/ch-init-user-db.sh
+      - ./docker/clickhouse/conf.xml:/etc/clickhouse-server/config.d/conf.xml
+      - ./docker/clickhouse/init.sh:/docker-entrypoint-initdb.d/init.sh
       - ./fleet/schema.sql:/opt/fleet/schema.sql
       - ./data:/var/lib/clickhouse/user_files
     ports:
@@ -87,13 +84,59 @@ services:
       - '127.0.0.1:9000:9000'
     hostname: clickhouse
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1
+      <<: *common-healthcheck
+      test: timeout 5 wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1
+
+  spark:
+    <<: *spark-common
+    command: /opt/spark/sbin/start-master.sh
+    environment:
+      SPARK_NO_DAEMONIZE: 1
+    ports:
+      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:7077:7077'
+    hostname: spark
+    healthcheck:
+      <<: *spark-common-healthcheck
+      test: timeout 5 curl -f -sS http://localhost:8080/ >/dev/null || exit 1
+
+  spark-worker:
+    <<: *spark-common
+    command: /opt/spark/sbin/start-worker.sh spark://spark:7077
+    environment:
+      SPARK_NO_DAEMONIZE: 1
+      SPARK_WORKER_MEMORY: 1G
+      SPARK_WORKER_CORES: 1
+    hostname: spark-worker
+    healthcheck:
+      <<: *spark-common-healthcheck
+      test: timeout 5 curl -f -sS http://localhost:8081/ >/dev/null || exit 1
+    scale: 4
+
+  airflow:
+    <<: *airflow-common
+    command: api-server
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ${AIRFLOW_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_PASSWORD:-airflow}
+      _AIRFLOW_WWW_USER_FIRSTNAME: Airflow
+      _AIRFLOW_WWW_USER_LASTNAME: Admin
+      _AIRFLOW_WWW_USER_EMAIL: user@example.com
+      FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
+      FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
+    ports:
+      - '127.0.0.1:8000:8080'
+    hostname: airflow
+    healthcheck:
+      <<: *airflow-common-healthcheck
+      test: timeout 5 curl -f -sS http://localhost:8080/api/v2/version >/dev/null || exit 1
 
   airflow-scheduler:
     <<: *airflow-common
-    environment:
-      <<: *airflow-common-env
-      AIRFLOW_COMPONENT_TYPE: scheduler
+    command: scheduler
     hostname: airflow-scheduler
     healthcheck:
       <<: *airflow-common-healthcheck
@@ -101,53 +144,18 @@ services:
 
   airflow-dag-processor:
     <<: *airflow-common
-    environment:
-      <<: *airflow-common-env
-      AIRFLOW_COMPONENT_TYPE: dag-processor
+    command: dag-processor
     hostname: airflow-dag-processor
     healthcheck:
       <<: *airflow-common-healthcheck
       test: timeout 10 airflow jobs check --job-type DagProcessorJob --local >/dev/null || exit 1
 
-  airflow:
-    <<: *airflow-common
-    environment:
-      <<: *airflow-common-env
-      AIRFLOW_COMPONENT_TYPE: api-server
-      AIRFLOW_APISERVER_HOST: ${HOSTNAME:-localhost}
-    ports:
-      - '127.0.0.1:8080:8080'
-    hostname: airflow
-    healthcheck:
-      <<: *airflow-common-healthcheck
-      test: httpx --timeout 5 http://localhost:8080/api/v2/version >/dev/null || exit 1
-
-  spark:
-    <<: *spark-common
-    environment:
-      SPARK_MODE: master
-    ports:
-      - '127.0.0.1:8081:8080'
-      - '127.0.0.1:7077:7077'
-    hostname: spark
-    healthcheck:
-      <<: *spark-common-healthcheck
-      test: timeout 5 bash -c "cat </dev/null >/dev/tcp/localhost/8080" || exit 1
-
-  spark-worker:
-    <<: *spark-common
-    environment:
-      SPARK_MODE: worker
-      SPARK_MASTER_URL: spark://spark:7077
-      SPARK_WORKER_MEMORY: 1G
-      SPARK_WORKER_CORES: 1
-    scale: 2
-    hostname: spark-worker
-    healthcheck:
-      <<: *spark-common-healthcheck
-      test: timeout 5 bash -c "cat </dev/null >/dev/tcp/localhost/8081" || exit 1
-
 
 volumes:
   postgres_data:
   clickhouse_data:
+
+
+networks:
+  default:
+    name: fleet

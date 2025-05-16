@@ -1,5 +1,0 @@
-airflow-clickhouse-plugin
-apache-airflow-providers-sqlite
-clickhouse-driver
-httpx
-retryhttp
