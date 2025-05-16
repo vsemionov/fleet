@@ -1,0 +1,6 @@
+airflow-clickhouse-plugin
+apache-airflow-providers-apache-spark
+apache-airflow-providers-sqlite
+clickhouse-driver
+httpx
+retryhttp

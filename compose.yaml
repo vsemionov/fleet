@@ -13,7 +13,7 @@ x-common:
 x-airflow-common:
   &airflow-common
   <<: *common
-  image: apache/airflow:3.0.1
+  build: docker/airflow
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -28,7 +28,6 @@ x-airflow-common:
     AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_KEY:-airflow-api-auth-jwt-secret}
     CONNECTION_CHECK_MAX_COUNT: 100
     CONNECTION_CHECK_SLEEP_TIME: 5
-    _PIP_ADDITIONAL_REQUIREMENTS: ${AIRFLOW_REQUIREMENTS:-}
   volumes:
     - ./dags:/opt/airflow/dags
   healthcheck:

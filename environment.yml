@@ -49,6 +49,7 @@ dependencies:
   - apache-airflow-providers-postgres
   - apache-airflow-providers-redis
   - apache-airflow-providers-amazon
+  - apache-airflow-providers-apache-spark
 
   - ipython
   - jupyter
