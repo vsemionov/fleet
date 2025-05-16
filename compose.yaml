@@ -102,7 +102,7 @@ services:
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
     ports:
-      - '127.0.0.1:8000:8080'
+      - '127.0.0.1:8080:8080'
     hostname: airflow
     healthcheck:
       <<: *airflow-common-healthcheck
@@ -130,7 +130,7 @@ services:
     environment:
       SPARK_NO_DAEMONIZE: 1
     ports:
-      - '127.0.0.1:8080:8080'
+      - '127.0.0.1:8081:8080'
       - '127.0.0.1:7077:7077'
     hostname: spark
     healthcheck:
