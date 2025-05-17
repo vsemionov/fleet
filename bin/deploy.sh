@@ -32,7 +32,7 @@ docker compose exec airflow bash -c "airflow connections get clickhouse || airfl
 docker compose exec airflow bash -c "airflow connections get spark || airflow connections add --conn-type spark --conn-host spark spark"
 
 echo "Enabling Airflow DAGs"
-docker compose exec airflow bash -c "airflow dags unpause process_states"
+#docker compose exec airflow bash -c "airflow dags unpause process_states"
 docker compose exec airflow bash -c "airflow dags unpause collect_states"
 
 echo "You can now delete data/aircraft.parquet (unless you plan to run this script again)"
