@@ -9,7 +9,8 @@ clickhouse client <<-EOSQL
 
     GRANT ALL ON fleet.* TO fleet;
     GRANT SELECT ON fleet.* TO reader;
-    -- required for Spark ClickHouse Connector:
+
+    -- required for spark clickhouse connector
     GRANT SELECT ON system.clusters to fleet;
     GRANT SELECT ON system.parts to fleet;
 EOSQL
