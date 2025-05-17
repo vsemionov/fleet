@@ -24,7 +24,7 @@ echo "Installing deployment dependencies"
 docker compose exec clickhouse bash -c "dpkg -l gettext || (apt update; apt install -y gettext; ARG=\$?; rm -rf /var/lib/apt/lists/* || exit 1; exit \$ARG)"
 
 echo "Creating warehouse schema"
-docker compose exec clickhouse bash -c "envsubst </opt/fleet/schema.sql | clickhouse-client -d fleet"
+docker compose exec clickhouse bash -c "envsubst </opt/fleet/schema.sql | clickhouse client -d fleet"
 
 echo "Creating Airflow connections"
 docker compose exec airflow bash -c "airflow connections get postgres || airflow connections add --conn-type postgres --conn-host postgres --conn-login fleet --conn-password "\$FLEET_DATABASE_PASSWORD" --conn-schema fleet postgres"
