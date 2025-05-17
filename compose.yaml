@@ -38,7 +38,7 @@ x-airflow-common:
   healthcheck:
     &airflow-common-healthcheck
     start_period: 60s
-    start_interval: 10s
+    start_interval: 15s
     interval: 60s
     retries: 5
 
