@@ -59,6 +59,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       AIRFLOW_DATABASE_PASSWORD: ${AIRFLOW_DATABASE_PASSWORD:-airflow}
+      GRAFANA_DATABASE_PASSWORD: ${GRAFANA_DATABASE_PASSWORD:-airflow}
       READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -91,6 +92,18 @@ services:
     healthcheck:
       <<: *common-healthcheck
       test: timeout 5 wget --no-verbose --tries=1 --spider http://localhost:8123/ping || exit 1
+
+  redis:
+    <<: *common
+    image: redis:8.0.1
+    volumes:
+      - redis_data:/data
+    ports:
+      - '127.0.0.1:6379:6379'
+    hostname: redis
+    healthcheck:
+      <<: *common-healthcheck
+      test: timeout 5 redis-cli ping >/dev/null || exit 1
 
   airflow:
     <<: *airflow-common
@@ -155,10 +168,36 @@ services:
       test: timeout 5 curl -f -sS http://localhost:8081/ >/dev/null || exit 1
     scale: 4
 
+  grafana:
+    <<: *common
+    image: grafana/grafana:12.0.0
+    environment:
+      GF_DATABASE_TYPE: postgres
+      GF_DATABASE_HOST: postgres
+      GF_DATABASE_NAME: grafana
+      GF_DATABASE_USER: grafana
+      GF_DATABASE_PASSWORD: grafana
+      GF_REMOTE_CACHE_TYPE: redis
+      GF_REMOTE_CACHE_CONNSTR: addr=redis:6379,db=2
+      GF_ADMIN_USER: admin
+      GF_ADMIN_PASSWORD: admin
+      GF_ADMIN_EMAIL: admin@localhost
+      GF_PLUGINS_PREINSTALL: grafana-clickhouse-datasource
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /opt/fleet/dashboard.json
+      READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
+    volumes:
+      - ./docker/grafana/dashboard.json:/opt/fleet/dashboard.json
+    ports:
+      - '127.0.0.1:3000:3000'
+    hostname: grafana
+    healthcheck:
+      test: timeout 5 curl -f -sS http://localhost:3000/api/health >/dev/null || exit 1
+
 
 volumes:
   postgres_data:
   clickhouse_data:
+  redis_data:
 
 
 networks:
