@@ -193,6 +193,7 @@ services:
       - '127.0.0.1:3000:3000'
     hostname: grafana
     healthcheck:
+      <<: *common-healthcheck
       test: timeout 5 curl -f -sS http://localhost:3000/api/health >/dev/null || exit 1
 
 
