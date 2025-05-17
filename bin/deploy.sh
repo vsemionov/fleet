@@ -27,8 +27,8 @@ echo "Creating warehouse schema"
 docker compose exec clickhouse bash -c "envsubst </opt/fleet/schema.sql | clickhouse-client -d fleet"
 
 echo "Creating Airflow connections"
-docker compose exec airflow bash -c "airflow connections get postgres || airflow connections add --conn-type postgres --conn-host postgres --conn-login fleet --conn-password \$FLEET_DATABASE_PASSWORD --conn-schema fleet postgres"
-docker compose exec airflow bash -c "airflow connections get clickhouse || airflow connections add --conn-type sqlite --conn-host clickhouse --conn-login fleet --conn-password \$FLEET_WAREHOUSE_PASSWORD --conn-schema fleet clickhouse"  # type sqlite as per airflow-clickhouse-plugin documentation
+docker compose exec airflow bash -c "airflow connections get postgres || airflow connections add --conn-type postgres --conn-host postgres --conn-login fleet --conn-password "\$FLEET_DATABASE_PASSWORD" --conn-schema fleet postgres"
+docker compose exec airflow bash -c "airflow connections get clickhouse || airflow connections add --conn-type sqlite --conn-host clickhouse --conn-login fleet --conn-password "\$FLEET_WAREHOUSE_PASSWORD" --conn-schema fleet clickhouse"  # type sqlite as per airflow-clickhouse-plugin documentation
 docker compose exec airflow bash -c "airflow connections get spark || airflow connections add --conn-type spark --conn-host spark spark"
 
 echo "Enabling Airflow DAGs"
