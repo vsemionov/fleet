@@ -60,6 +60,7 @@ services:
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       AIRFLOW_DATABASE_PASSWORD: ${AIRFLOW_DATABASE_PASSWORD:-airflow}
       GRAFANA_DATABASE_PASSWORD: ${GRAFANA_DATABASE_PASSWORD:-grafana}
+      SUPERSET_DATABASE_PASSWORD: ${SUPERSET_DATABASE_PASSWORD:-superset}
       READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -116,7 +117,7 @@ services:
       _AIRFLOW_WWW_USER_PASSWORD: ${AIRFLOW_PASSWORD:-airflow}
       _AIRFLOW_WWW_USER_FIRSTNAME: Airflow
       _AIRFLOW_WWW_USER_LASTNAME: Admin
-      _AIRFLOW_WWW_USER_EMAIL: user@example.com
+      _AIRFLOW_WWW_USER_EMAIL: admin@localhost
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
     ports:
@@ -195,6 +196,30 @@ services:
     healthcheck:
       <<: *common-healthcheck
       test: timeout 5 curl -f -sS http://localhost:3000/api/health >/dev/null || exit 1
+
+  superset:
+    <<: *common
+    build: docker/superset
+    command: /opt/fleet/bootstrap.sh
+    environment:
+      SUPERSET_DATABASE_URL: postgresql://superset:${SUPERSET_DATABASE_PASSWORD:-superset}@postgres/superset
+      SUPERSET_REDIS_URL: redis://redis:6379/3
+      SUPERSET_SECRET_KEY: superset-secret-key
+      SUPERSET_CONFIG_PATH: /opt/fleet/superset_config.py
+      SUPERSET_ADMIN_USERNAME: ${SUPERSET_ADMIN_USERNAME:-admin}
+      SUPERSET_ADMIN_PASSWORD: ${SUPERSET_ADMIN_PASSWORD:-admin}
+      SUPERSET_ADMIN_FIRSTNAME: Superset
+      SUPERSET_ADMIN_LASTNAME: Admin
+      SUPERSET_ADMIN_EMAIL: admin@localhost
+    volumes:
+      - ./docker/superset/bootstrap.sh:/opt/fleet/bootstrap.sh
+      - ./docker/superset/superset_config.py:/opt/fleet/superset_config.py
+      - ./docker/superset/init.sh:/opt/fleet/init.sh
+    ports:
+      - '127.0.0.1:8088:8088'
+    hostname: superset
+    healthcheck:
+      test: timeout 5 curl -f -sS http://localhost:8088/health >/dev/null || exit 1
 
 
 volumes:
