@@ -231,7 +231,7 @@ lifetime(0);
 select count() from aircraft_dict format null; -- trigger population of the dictionary
 
 
-create view if not exists states_aircraft as
+create view if not exists clean_states_aircraft as
 select time_position,
        icao24,
        callsign,
