@@ -29,8 +29,10 @@ docker compose exec clickhouse bash -c "envsubst </opt/fleet/schema.sql | clickh
 echo "Creating Airflow connections"
 docker compose exec airflow bash -c "airflow connections get postgres || airflow connections add --conn-type postgres --conn-host postgres --conn-login fleet --conn-password \$FLEET_DATABASE_PASSWORD --conn-schema fleet postgres"
 docker compose exec airflow bash -c "airflow connections get clickhouse || airflow connections add --conn-type sqlite --conn-host clickhouse --conn-login fleet --conn-password \$FLEET_WAREHOUSE_PASSWORD --conn-schema fleet clickhouse"  # type sqlite as per airflow-clickhouse-plugin documentation
+docker compose exec airflow bash -c "airflow connections get spark || airflow connections add --conn-type spark --conn-host spark spark"
 
 echo "Enabling Airflow DAGs"
-docker compose exec airflow bash -c "airflow dags unpause states_etl"
+docker compose exec airflow bash -c "airflow dags unpause process_states"
+docker compose exec airflow bash -c "airflow dags unpause collect_states"
 
 echo "You can now delete data/aircraft.parquet (unless you plan to run this script again)"

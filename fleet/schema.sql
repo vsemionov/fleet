@@ -57,7 +57,7 @@ primary key time
 order by (time, icao24);
 
 
-create table if not exists processed_states
+create table if not exists clean_states
 (
     time DateTime,
     icao24 FixedString(6),
@@ -118,7 +118,7 @@ primary key time_position
 order by (time_position, icao24);
 
 
-create materialized view if not exists processed_states_mv to processed_states as
+create materialized view if not exists clean_states_mv to clean_states as
 select time,
        icao24,
        callsign,
@@ -253,4 +253,4 @@ select time_position,
        dictGet('aircraft_dict', 'model', icao24) as model,
        dictGet('aircraft_dict', 'owner', icao24) as owner,
        dictGet('aircraft_dict', 'registration', icao24) as registration
-from processed_states;
+from clean_states;

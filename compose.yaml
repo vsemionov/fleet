@@ -13,7 +13,10 @@ x-common:
 x-airflow-common:
   &airflow-common
   <<: *common
-  build: docker/airflow
+  build:
+    context: docker/airflow
+    args:
+      JAVA_VERSION: 17
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
@@ -28,6 +31,8 @@ x-airflow-common:
     AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_KEY:-airflow-api-auth-jwt-secret}
     CONNECTION_CHECK_MAX_COUNT: 100
     CONNECTION_CHECK_SLEEP_TIME: 5
+    POSTGRES_JDBC_DRIVER: 'org.postgresql:postgresql:42.7.5'  # https://jdbc.postgresql.org/
+    SPARK_CLICKHOUSE_CONNECTOR: 'com.clickhouse.spark:clickhouse-spark-runtime-3.5_2.12:0.8.1,com.clickhouse:clickhouse-jdbc:0.6.3'  # https://clickhouse.com/docs/integrations/apache-spark/spark-native-connector#compatibility-matrix
   volumes:
     - ./dags:/opt/airflow/dags
   healthcheck:
@@ -39,7 +44,7 @@ x-airflow-common:
 x-spark-common:
   &spark-common
   <<: *common
-  image: spark:3.5.5
+  image: spark:3.5.5-java17
   healthcheck:
     &spark-common-healthcheck
     <<: *common-healthcheck

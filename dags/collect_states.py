@@ -2,18 +2,16 @@ import time
 from datetime import datetime, timedelta
 import logging
 
-from airflow.sdk import dag, task, Asset
+from airflow.sdk import dag, task
 from airflow.timetables.trigger import CronTriggerTimetable
 from airflow_clickhouse_plugin.hooks.clickhouse import ClickHouseHook
 import httpx
 from retryhttp import retry
 
+from daglib.assets import STATES_TABLE, states_asset
+from daglib.config import CLICKHOUSE_CONN_ID
 from daglib.models import State
 
-
-CONN_ID = 'clickhouse'
-STATES_TABLE = 'states'
-STATES_URI = f'fleet://{CONN_ID}/{STATES_TABLE}'
 
 API_URL = 'https://opensky-network.org/api/states/all'
 API_PARAMS = {'extended': 1}
@@ -22,7 +20,6 @@ MAX_TIME_DIFF = 300
 
 
 logger = logging.getLogger('airflow.task')
-states_asset = Asset(STATES_URI)
 
 
 @dag(
@@ -36,7 +33,7 @@ states_asset = Asset(STATES_URI)
         'execution_timeout': timedelta(seconds=60),
     },
 )
-def states_etl():
+def collect_states():
     """Ingests aircraft states from OpenSky REST API to ClickHouse.
 
     Requires: ClickHouse connection
@@ -78,26 +75,22 @@ def states_etl():
                 state.squawk = None
 
     @task(outlets=[states_asset])
-    def etl():
+    def collect():
         data = retrieve()
         validate(data)
         timestamp, states = convert(data)
         adapt(states)
         states = [list(state.model_dump().values()) for state in states]
-        hook = ClickHouseHook(clickhouse_conn_id=CONN_ID)
+        hook = ClickHouseHook(clickhouse_conn_id=CLICKHOUSE_CONN_ID)
         start_time = time.time()
         hook.execute(f'insert into {STATES_TABLE} values', states)
         logger.info(f'Insert took {time.time() - start_time:.3f} s')
         return timestamp
 
-    @task(outlets=[states_asset])
-    def transform_load(timestamp):
-        logger.info('todo')
-
-    etl()
+    collect()
 
 
-dag_obj = states_etl()
+dag_obj = collect_states()
 
 
 if __name__ == '__main__':
