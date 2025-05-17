@@ -1,0 +1,70 @@
+# https://grafana.com/docs/grafana/latest/administration/provisioning
+# exported with: curl -u "$GF_ADMIN_USER:$GF_ADMIN_PASSWORD" http://localhost:3000/api/datasources
+
+apiVersion: 1
+
+prune: true
+
+datasources:
+  - name: postgres
+    type: grafana-postgresql-datasource
+    typeName: PostgreSQL
+    typeLogoUrl: public/app/plugins/datasource/grafana-postgresql-datasource/img/postgresql_logo.svg
+    uid: dem4xij9821hcc
+    orgId: 1
+    access: proxy
+    url: postgres
+    user: reader
+    database: ''
+    basicAuth: false
+    isDefault: false
+    jsonData:
+      connMaxLifetime: 14400
+      database: fleet
+      maxIdleConns: 20
+      maxIdleConnsAuto: true
+      maxOpenConns: 20
+      postgresVersion: 1500
+      sslmode: disable
+    secureJsonData:
+      password: $READER_DATABASE_PASSWORD
+    readOnly: false
+
+    version: 1
+    editable: false
+
+
+  - name: clickhouse
+    type: grafana-clickhouse-datasource
+    typeName: ClickHouse
+    typeLogoUrl: public/plugins/grafana-clickhouse-datasource/img/logo.svg
+    uid: dem4xxg0tkao0a
+    orgId: 1
+    access: proxy
+    url: ''
+    user: ''
+    database: ''
+    basicAuth: false
+    isDefault: true
+    jsonData:
+      defaultDatabase: fleet
+      host: clickhouse
+      logs:
+        contextColumns: []
+        defaultTable: otel_logs
+        otelVersion: latest
+        selectContextColumns: true
+      port: 9000
+      protocol: native
+      traces:
+        defaultTable: otel_traces
+        durationUnit: nanoseconds
+        otelVersion: latest
+      username: reader
+      version: 4.8.2
+    secureJsonData:
+      password: $READER_WAREHOUSE_PASSWORD
+    readOnly: false
+
+    version: 1
+    editable: false

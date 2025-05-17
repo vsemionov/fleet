@@ -183,10 +183,12 @@ services:
       GF_ADMIN_PASSWORD: admin
       GF_ADMIN_EMAIL: admin@localhost
       GF_PLUGINS_PREINSTALL: grafana-clickhouse-datasource
-      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /opt/fleet/dashboard.json
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /opt/fleet/dashboards/home.json
       READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
+      READER_WAREHOUSE_PASSWORD: ${READER_WAREHOUSE_PASSWORD:-reader}
     volumes:
-      - ./docker/grafana/dashboard.json:/opt/fleet/dashboard.json
+      - ./docker/grafana/dashboards:/opt/fleet/dashboards
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning
     ports:
       - '127.0.0.1:3000:3000'
     hostname: grafana

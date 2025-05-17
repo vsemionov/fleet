@@ -1,0 +1,14 @@
+# https://grafana.com/docs/grafana/latest/administration/provisioning/#dashboards
+
+apiVersion: 1
+
+providers:
+  - name: 'dashboards'
+    orgId: 1
+    type: file
+    allowUiUpdates: false
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    options:
+      path: /opt/fleet/dashboards
+      foldersFromFilesStructure: true

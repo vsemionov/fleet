@@ -133,12 +133,12 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Fleet",
+  "title": "Home",
   "uid": "5dd4593f-acfe-43c4-a3e3-c2d62a4858f8",
   "version": 1
 }
