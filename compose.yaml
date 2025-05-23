@@ -171,7 +171,7 @@ services:
 
   grafana:
     <<: *common
-    image: grafana/grafana:12.0.0
+    image: grafana/grafana:12.0.1
     environment:
       GF_DATABASE_TYPE: postgres
       GF_DATABASE_HOST: postgres
