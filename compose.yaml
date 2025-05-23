@@ -80,6 +80,7 @@ services:
       FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
       READER_WAREHOUSE_PASSWORD: ${READER_WAREHOUSE_PASSWORD:-reader}
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+      CLICKHOUSE_DO_NOT_CHOWN: 1
     volumes:
       - clickhouse_data:/var/lib/clickhouse
       - ./docker/clickhouse/conf.xml:/etc/clickhouse-server/config.d/conf.xml
