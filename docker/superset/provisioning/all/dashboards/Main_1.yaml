@@ -121,6 +121,7 @@ metadata:
     description: ''
     chartsInScope:
     - 1
+    - 4
     tabsInScope: []
   - id: NATIVE_FILTER-C5A9FPYmqCaaxqvREZ-wJ
     controlValues:
@@ -128,7 +129,7 @@ metadata:
     name: Time grain
     filterType: filter_timegrain
     targets:
-    - datasetUuid: 9f3e7826-bc2e-4420-b744-4fcb364cd777
+    - datasetUuid: 47ba11e3-d4e3-4b27-b3ec-9c6a154b54ef
     defaultDataMask:
       extraFormData:
         time_grain_sqla: PT1H
@@ -144,6 +145,7 @@ metadata:
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
+    - 1
     - 4
     tabsInScope: []
   default_filters: '{}'

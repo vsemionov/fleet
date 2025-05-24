@@ -1,14 +1,13 @@
-slice_name: Aircraft
+slice_name: Active aircraft
 description: null
 certified_by: null
 certification_details: null
 viz_type: echarts_timeseries_line
 params:
-  datasource: 3__table
+  datasource: 7__table
   viz_type: echarts_timeseries_line
   slice_id: 1
   x_axis: time
-  time_grain_sqla: PT1H
   metrics:
   - count
   groupby:
@@ -54,13 +53,13 @@ params:
   extra_form_data: {}
   dashboards:
   - 1
-query_context: '{"datasource":{"id":3,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time","op":"TEMPORAL_RANGE","val":"No
-  filter"}],"extras":{"time_grain_sqla":"PT1H","having":"","where":""},"applied_time_extras":{},"columns":[{"timeGrain":"PT1H","columnType":"BASE_AXIS","sqlExpression":"time","label":"time","expressionType":"SQL"},{"datasourceWarning":false,"expressionType":"SQL","label":"on_ground","sqlExpression":"case
+query_context: '{"datasource":{"id":7,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"time","label":"time","expressionType":"SQL"},{"datasourceWarning":false,"expressionType":"SQL","label":"on_ground","sqlExpression":"case
   when on_ground then ''Ground'' else ''Airborne'' end"}],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":10000,"series_columns":[{"datasourceWarning":false,"expressionType":"SQL","label":"on_ground","sqlExpression":"case
-  when on_ground then ''Ground'' else ''Airborne'' end"}],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["time"],"columns":["on_ground"],"aggregates":{"count":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"rename","options":{"columns":{"count":null},"level":0,"inplace":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"3__table","viz_type":"echarts_timeseries_line","slice_id":1,"x_axis":"time","time_grain_sqla":"PT1H","metrics":["count"],"groupby":[{"datasourceWarning":false,"expressionType":"SQL","label":"on_ground","sqlExpression":"case
+  when on_ground then ''Ground'' else ''Airborne'' end"}],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["time"],"columns":["on_ground"],"aggregates":{"count":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"rename","options":{"columns":{"count":null},"level":0,"inplace":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"7__table","viz_type":"echarts_timeseries_line","slice_id":1,"x_axis":"time","metrics":["count"],"groupby":[{"datasourceWarning":false,"expressionType":"SQL","label":"on_ground","sqlExpression":"case
   when on_ground then ''Ground'' else ''Airborne'' end"}],"adhoc_filters":[{"clause":"WHERE","comparator":"No
   filter","expressionType":"SIMPLE","operator":"TEMPORAL_RANGE","subject":"time"}],"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"comparison_type":"values","annotation_layers":[],"forecastPeriods":10,"forecastInterval":0.8,"x_axis_title_margin":15,"y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"sum","color_scheme":"supersetColors","seriesType":"line","only_total":true,"opacity":0.2,"markerSize":6,"show_legend":true,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","rich_tooltip":true,"showTooltipTotal":true,"showTooltipPercentage":true,"tooltipTimeFormat":"smart_date","y_axis_format":"SMART_NUMBER","truncateXAxis":true,"y_axis_bounds":[null,null],"extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
 cache_timeout: null
 uuid: eb7662f4-16f9-4b4a-b6ff-70bb7a0a19e9
 version: 1.0.0
-dataset_uuid: 9f3e7826-bc2e-4420-b744-4fcb364cd777
+dataset_uuid: 47ba11e3-d4e3-4b27-b3ec-9c6a154b54ef

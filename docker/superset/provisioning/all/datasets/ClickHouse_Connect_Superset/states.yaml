@@ -1,4 +1,4 @@
-table_name: augmented_clean_states
+table_name: states
 main_dttm_col: time
 description: null
 default_endpoint: null
@@ -6,9 +6,7 @@ offset: 0
 cache_timeout: null
 catalog: null
 schema: fleet
-sql: "select *,\n  lagInFrame(time_position::Nullable(DateTime)) over (partition by\
-  \ icao24 order by time_position) as last_time_position,\n  lagInFrame(on_ground::Nullable(Bool))\
-  \ over (partition by icao24 order by time_position) as last_on_ground\nfrom clean_states\n"
+sql: null
 params: null
 template_params: null
 filter_select_enabled: true
@@ -16,7 +14,7 @@ fetch_values_predicate: null
 extra: null
 normalize_columns: false
 always_filter_main_dttm: false
-uuid: 9f3e7826-bc2e-4420-b744-4fcb364cd777
+uuid: 47ba11e3-d4e3-4b27-b3ec-9c6a154b54ef
 metrics:
 - metric_name: count
   verbose_name: COUNT(*)
@@ -25,258 +23,245 @@ metrics:
   description: null
   d3format: null
   currency: null
-  extra:
-    warning_markdown: ''
+  extra: null
   warning_text: null
 columns:
 - column_name: category
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: "Enum8('No information at all' = 0, 'No ADS-B Emitter Category Information'\
-    \ = 1, 'Light (< 15500 lbs)' = 2, 'Small (15500 to 75000 lbs)' = 3, 'Large (75000\
-    \ to 300000 lbs)' = 4, 'High Vortex Large (aircraft such as B-757)' = 5, 'Heavy\
-    \ (> 300000 lbs)' = 6, 'High Performance (> 5g acceleration and 400 kts)' = 7,\
-    \ 'Rotorcraft' = 8, 'Glider / sailplane' = 9, 'Lighter-than-air' = 10, 'Parachutist\
-    \ / Skydiver' = 11, 'Ultralight / hang-glider / paraglider' = 12, 'Reserved' =\
-    \ 13, 'Unmanned Aerial Vehicle' = 14, 'Space / Trans-atmospheric vehicle' = 15,\
-    \ 'Surface Vehicle \u2013 Emergency Vehicle' = 16, 'Surface Vehicle \u2013 Service\
-    \ Vehicle' = 17, 'Point Obstacle (includes tethered balloons)' = 18, 'Cluster\
-    \ Obstacle' = 19, 'Line Obstacle' = 20)"
+  type: "ENUM8('NO INFORMATION AT ALL' = 0, 'NO ADS-B EMITTER CATEGORY INFORMATION'\
+    \ = 1, 'LIGHT (< 15500 LBS)' = 2, 'SMALL (15500 TO 75000 LBS)' = 3, 'LARGE (75000\
+    \ TO 300000 LBS)' = 4, 'HIGH VORTEX LARGE (AIRCRAFT SUCH AS B-757)' = 5, 'HEAVY\
+    \ (> 300000 LBS)' = 6, 'HIGH PERFORMANCE (> 5G ACCELERATION AND 400 KTS)' = 7,\
+    \ 'ROTORCRAFT' = 8, 'GLIDER / SAILPLANE' = 9, 'LIGHTER-THAN-AIR' = 10, 'PARACHUTIST\
+    \ / SKYDIVER' = 11, 'ULTRALIGHT / HANG-GLIDER / PARAGLIDER' = 12, 'RESERVED' =\
+    \ 13, 'UNMANNED AERIAL VEHICLE' = 14, 'SPACE / TRANS-ATMOSPHERIC VEHICLE' = 15,\
+    \ 'SURFACE VEHICLE \u2013 EMERGENCY VEHICLE' = 16, 'SURFACE VEHICLE \u2013 SERVICE\
+    \ VEHICLE' = 17, 'POINT OBSTACLE (INCLUDES TETHERED BALLOONS)' = 18, 'CLUSTER\
+    \ OBSTACLE' = 19, 'LINE OBSTACLE' = 20)"
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
 - column_name: position_source
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: Enum8('ADS-B' = 0, 'ASTERIX' = 1, 'MLAT' = 2, 'FLARM' = 3)
+  type: ENUM8('ADS-B' = 0, 'ASTERIX' = 1, 'MLAT' = 2, 'FLARM' = 3)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
 - column_name: squawk
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: Nullable(FixedString(4))
+  type: NULLABLE(FIXEDSTRING(4))
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
 - column_name: sensors
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: Array(UInt32)
+  type: ARRAY(UINT32)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
-- column_name: baro_altitude
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Nullable(Float32)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: vertical_rate
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Nullable(Float32)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: true_track
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Nullable(Float32)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: geo_altitude
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Nullable(Float32)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: velocity
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Nullable(Float32)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
+  extra: null
 - column_name: icao24
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: FixedString(6)
+  type: FIXEDSTRING(6)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
-- column_name: origin_country
+  extra: null
+- column_name: baro_altitude
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: LowCardinality(String)
+  type: NULLABLE(FLOAT64)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
+- column_name: vertical_rate
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT64)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: true_track
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT64)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: geo_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT64)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: latitude
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: Float64
+  type: NULLABLE(FLOAT64)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
+- column_name: velocity
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT64)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: longitude
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: Float64
+  type: NULLABLE(FLOAT64)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
-- column_name: last_on_ground
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Bool
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: on_ground
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Bool
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: spi
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: Bool
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
-- column_name: last_contact
-  verbose_name: null
-  is_dttm: true
-  is_active: true
-  type: DateTime
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: {}
+  extra: null
 - column_name: time_position
   verbose_name: null
   is_dttm: true
   is_active: true
-  type: DateTime
+  type: NULLABLE(DATETIME)
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
+- column_name: origin_country
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: LOWCARDINALITY(STRING)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: last_contact
+  verbose_name: null
+  is_dttm: true
+  is_active: true
+  type: DATETIME
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: time
   verbose_name: null
   is_dttm: true
   is_active: true
-  type: DateTime
+  type: DATETIME
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
+- column_name: on_ground
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BOOL
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: spi
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BOOL
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: callsign
   verbose_name: null
   is_dttm: false
   is_active: true
-  type: String
+  type: STRING
   advanced_data_type: null
   groupby: true
   filterable: true
   expression: null
   description: null
   python_date_format: null
-  extra: {}
+  extra: null
 version: 1.0.0
 database_uuid: 116cd13e-4bbf-4328-99f2-4086b2dea455

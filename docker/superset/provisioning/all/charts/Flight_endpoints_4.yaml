@@ -1,0 +1,86 @@
+slice_name: Flight endpoints
+description: null
+certified_by: null
+certification_details: null
+viz_type: echarts_timeseries_line
+params:
+  datasource: 5__table
+  viz_type: echarts_timeseries_line
+  slice_id: 4
+  x_axis: time_position
+  x_axis_sort_asc: true
+  x_axis_sort_series: name
+  x_axis_sort_series_ascending: true
+  metrics:
+  - count
+  groupby:
+  - expressionType: SQL
+    label: on_ground
+    sqlExpression: case when on_ground then 'Landings' else 'Takeoffs' end
+    datasourceWarning: false
+  contributionMode: null
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: time_position
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_qaqgyj9sez_g1gebxnmgjd
+  - expressionType: SQL
+    sqlExpression: on_ground != prev_on_ground
+    clause: WHERE
+    subject: null
+    operator: null
+    comparator: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_yodz4qk720s_zll48ptx3h
+  order_desc: true
+  row_limit: 10000
+  truncate_metric: true
+  show_empty_columns: true
+  comparison_type: values
+  annotation_layers: []
+  forecastPeriods: 10
+  forecastInterval: 0.8
+  x_axis_title_margin: 15
+  y_axis_title_margin: 15
+  y_axis_title_position: Left
+  sort_series_type: sum
+  color_scheme: supersetColors
+  seriesType: line
+  only_total: true
+  opacity: 0.2
+  markerSize: 6
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  x_axis_time_format: smart_date
+  rich_tooltip: true
+  showTooltipTotal: true
+  showTooltipPercentage: true
+  tooltipTimeFormat: smart_date
+  y_axis_format: SMART_NUMBER
+  truncateXAxis: true
+  y_axis_bounds:
+  - null
+  - null
+  extra_form_data: {}
+  dashboards:
+  - 1
+query_context: '{"datasource":{"id":5,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time_position","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":"(on_ground != prev_on_ground)"},"applied_time_extras":{},"columns":[{"columnType":"BASE_AXIS","sqlExpression":"time_position","label":"time_position","expressionType":"SQL"},{"expressionType":"SQL","label":"on_ground","sqlExpression":"case
+  when on_ground then ''Landings'' else ''Takeoffs'' end","datasourceWarning":false}],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":10000,"series_columns":[{"expressionType":"SQL","label":"on_ground","sqlExpression":"case
+  when on_ground then ''Landings'' else ''Takeoffs'' end","datasourceWarning":false}],"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"time_offsets":[],"post_processing":[{"operation":"pivot","options":{"index":["time_position"],"columns":["on_ground"],"aggregates":{"count":{"operator":"mean"}},"drop_missing_columns":false}},{"operation":"rename","options":{"columns":{"count":null},"level":0,"inplace":true}},{"operation":"flatten"}]}],"form_data":{"datasource":"5__table","viz_type":"echarts_timeseries_line","slice_id":4,"x_axis":"time_position","x_axis_sort_asc":true,"x_axis_sort_series":"name","x_axis_sort_series_ascending":true,"metrics":["count"],"groupby":[{"expressionType":"SQL","label":"on_ground","sqlExpression":"case
+  when on_ground then ''Landings'' else ''Takeoffs'' end","datasourceWarning":false}],"contributionMode":null,"adhoc_filters":[{"expressionType":"SIMPLE","subject":"time_position","operator":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_qaqgyj9sez_g1gebxnmgjd"},{"expressionType":"SQL","sqlExpression":"on_ground
+  != prev_on_ground","clause":"WHERE","subject":null,"operator":null,"comparator":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_yodz4qk720s_zll48ptx3h"}],"order_desc":true,"row_limit":10000,"truncate_metric":true,"show_empty_columns":true,"comparison_type":"values","annotation_layers":[],"forecastPeriods":10,"forecastInterval":0.8,"x_axis_title_margin":15,"y_axis_title_margin":15,"y_axis_title_position":"Left","sort_series_type":"sum","color_scheme":"supersetColors","seriesType":"line","only_total":true,"opacity":0.2,"markerSize":6,"show_legend":true,"legendType":"scroll","legendOrientation":"top","x_axis_time_format":"smart_date","rich_tooltip":true,"showTooltipTotal":true,"showTooltipPercentage":true,"tooltipTimeFormat":"smart_date","y_axis_format":"SMART_NUMBER","truncateXAxis":true,"y_axis_bounds":[null,null],"extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 64f20c22-1fe3-453a-819c-f54099dff742
+version: 1.0.0
+dataset_uuid: 09c31cb4-8f75-4e34-96e8-d32cfd7a05b8
