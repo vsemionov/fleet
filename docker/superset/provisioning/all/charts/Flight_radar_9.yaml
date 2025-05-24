@@ -1,0 +1,72 @@
+slice_name: Flight radar
+description: null
+certified_by: null
+certification_details: null
+viz_type: deck_arc
+params:
+  datasource: 10__table
+  viz_type: deck_arc
+  start_spatial:
+    type: latlong
+    latCol: prev_latitude
+    lonCol: prev_longitude
+  end_spatial:
+    type: latlong
+    latCol: end_latitude
+    lonCol: end_longitude
+  row_limit: 10000
+  filter_nulls: true
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: time
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_skog2cs5jkl_yczj3nh66x
+  - expressionType: SIMPLE
+    subject: end_on_ground
+    operator: ==
+    operatorId: IS_TRUE
+    comparator: true
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_r00e69iqqu_7mnoer2w4rn
+  mapbox_style: mapbox://styles/mapbox/light-v9
+  autozoom: true
+  viewport:
+    longitude: 6.85236157047845
+    latitude: 31.222656842808707
+    zoom: 1
+    bearing: 0
+    pitch: 0
+  color_picker:
+    r: 0
+    g: 122
+    b: 135
+    a: 1
+  target_color_picker:
+    r: 0
+    g: 122
+    b: 135
+    a: 1
+  color_scheme: supersetColors
+  legend_position: tr
+  legend_format: SMART_NUMBER
+  js_columns: []
+  extra_form_data: {}
+  dashboards:
+  - 1
+query_context: '{"datasource":{"id":10,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time","op":"TEMPORAL_RANGE","val":"No
+  filter"},{"col":"end_on_ground","op":"==","val":true}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":[],"metrics":[],"annotation_layers":[],"row_limit":10000,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"10__table","viz_type":"deck_arc","start_spatial":{"type":"latlong","latCol":"prev_latitude","lonCol":"prev_longitude"},"end_spatial":{"type":"latlong","latCol":"end_latitude","lonCol":"end_longitude"},"row_limit":10000,"filter_nulls":true,"adhoc_filters":[{"expressionType":"SIMPLE","subject":"time","operator":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_skog2cs5jkl_yczj3nh66x"},{"expressionType":"SIMPLE","subject":"end_on_ground","operator":"==","operatorId":"IS_TRUE","comparator":true,"clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_r00e69iqqu_7mnoer2w4rn"}],"mapbox_style":"mapbox://styles/mapbox/light-v9","autozoom":true,"viewport":{"longitude":6.85236157047845,"latitude":31.222656842808707,"zoom":1,"bearing":0,"pitch":0},"color_picker":{"r":0,"g":122,"b":135,"a":1},"target_color_picker":{"r":0,"g":122,"b":135,"a":1},"color_scheme":"supersetColors","legend_position":"tr","legend_format":"SMART_NUMBER","js_columns":[],"extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 5cfea3a2-0baf-4f4d-859e-0d5883a1c9c7
+version: 1.0.0
+dataset_uuid: 63c1096e-bc8e-4f69-bad7-910c1b6bdf80

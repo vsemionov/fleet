@@ -1,4 +1,4 @@
-table_name: states
+table_name: clean_flights
 main_dttm_col: time
 description: null
 default_endpoint: null
@@ -14,7 +14,7 @@ fetch_values_predicate: null
 extra: null
 normalize_columns: false
 always_filter_main_dttm: false
-uuid: c012fb97-e8da-4fd8-8c4e-4a30840b020b
+uuid: 63c1096e-bc8e-4f69-bad7-910c1b6bdf80
 metrics:
 - metric_name: count
   verbose_name: COUNT(*)
@@ -71,11 +71,131 @@ columns:
   description: null
   python_date_format: null
   extra: null
+- column_name: end_baro_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: prev_baro_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: end_geo_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: prev_geo_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: baro_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: vertical_rate
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: true_track
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: geo_altitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: velocity
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(FLOAT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: sensors
   verbose_name: null
   is_dttm: false
   is_active: true
   type: ARRAY(UINT32)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: duration
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(INT32)
   advanced_data_type: null
   groupby: true
   filterable: true
@@ -95,11 +215,11 @@ columns:
   description: null
   python_date_format: null
   extra: null
-- column_name: baro_altitude
+- column_name: end_time_position
   verbose_name: null
-  is_dttm: false
+  is_dttm: true
   is_active: true
-  type: NULLABLE(FLOAT64)
+  type: NULLABLE(DATETIME)
   advanced_data_type: null
   groupby: true
   filterable: true
@@ -107,11 +227,11 @@ columns:
   description: null
   python_date_format: null
   extra: null
-- column_name: vertical_rate
+- column_name: next_time_position
   verbose_name: null
-  is_dttm: false
+  is_dttm: true
   is_active: true
-  type: NULLABLE(FLOAT64)
+  type: NULLABLE(DATETIME)
   advanced_data_type: null
   groupby: true
   filterable: true
@@ -119,67 +239,7 @@ columns:
   description: null
   python_date_format: null
   extra: null
-- column_name: true_track
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: NULLABLE(FLOAT64)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: geo_altitude
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: NULLABLE(FLOAT64)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: latitude
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: NULLABLE(FLOAT64)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: velocity
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: NULLABLE(FLOAT64)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: longitude
-  verbose_name: null
-  is_dttm: false
-  is_active: true
-  type: NULLABLE(FLOAT64)
-  advanced_data_type: null
-  groupby: true
-  filterable: true
-  expression: null
-  description: null
-  python_date_format: null
-  extra: null
-- column_name: time_position
+- column_name: prev_time_position
   verbose_name: null
   is_dttm: true
   is_active: true
@@ -203,7 +263,115 @@ columns:
   description: null
   python_date_format: null
   extra: null
+- column_name: prev_on_ground
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: NULLABLE(BOOL)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: end_latitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: prev_latitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: end_longitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: prev_longitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: distance
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: latitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: longitude
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT64
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
 - column_name: last_contact
+  verbose_name: null
+  is_dttm: true
+  is_active: true
+  type: DATETIME
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: time_position
   verbose_name: null
   is_dttm: true
   is_active: true
@@ -220,6 +388,18 @@ columns:
   is_dttm: true
   is_active: true
   type: DATETIME
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  extra: null
+- column_name: end_on_ground
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BOOL
   advanced_data_type: null
   groupby: true
   filterable: true
