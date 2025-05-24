@@ -212,10 +212,14 @@ services:
       SUPERSET_ADMIN_FIRSTNAME: Superset
       SUPERSET_ADMIN_LASTNAME: Admin
       SUPERSET_ADMIN_EMAIL: admin@localhost
+      READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
+      READER_WAREHOUSE_PASSWORD: ${READER_WAREHOUSE_PASSWORD:-reader}
     volumes:
       - ./docker/superset/bootstrap.sh:/opt/fleet/bootstrap.sh
       - ./docker/superset/superset_config.py:/opt/fleet/superset_config.py
       - ./docker/superset/init.sh:/opt/fleet/init.sh
+      - ./docker/superset/provision.sh:/opt/fleet/provision.sh
+      - ./docker/superset/provisioning:/opt/fleet/provisioning
     ports:
       - '127.0.0.1:8088:8088'
     hostname: superset
