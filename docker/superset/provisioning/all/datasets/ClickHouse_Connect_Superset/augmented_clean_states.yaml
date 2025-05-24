@@ -6,8 +6,9 @@ offset: 0
 cache_timeout: null
 catalog: null
 schema: fleet
-sql: "select *,\n  lagInFrame(on_ground) over (partition by icao24 order by time_position)\
-  \ as last_on_ground\nfrom clean_states\n"
+sql: "select *,\n  lagInFrame(time_position::Nullable(DateTime)) over (partition by\
+  \ icao24 order by time_position) as last_time_position,\n  lagInFrame(on_ground::Nullable(Bool))\
+  \ over (partition by icao24 order by time_position) as last_on_ground\nfrom clean_states\n"
 params: null
 template_params: null
 filter_select_enabled: true
@@ -24,7 +25,8 @@ metrics:
   description: null
   d3format: null
   currency: null
-  extra: null
+  extra:
+    warning_markdown: ''
   warning_text: null
 columns:
 - column_name: category
@@ -47,7 +49,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: position_source
   verbose_name: null
   is_dttm: false
@@ -59,7 +61,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: squawk
   verbose_name: null
   is_dttm: false
@@ -71,7 +73,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: sensors
   verbose_name: null
   is_dttm: false
@@ -83,7 +85,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: baro_altitude
   verbose_name: null
   is_dttm: false
@@ -95,7 +97,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: vertical_rate
   verbose_name: null
   is_dttm: false
@@ -107,7 +109,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: true_track
   verbose_name: null
   is_dttm: false
@@ -119,7 +121,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: geo_altitude
   verbose_name: null
   is_dttm: false
@@ -131,7 +133,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: velocity
   verbose_name: null
   is_dttm: false
@@ -143,7 +145,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: icao24
   verbose_name: null
   is_dttm: false
@@ -155,7 +157,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: origin_country
   verbose_name: null
   is_dttm: false
@@ -167,7 +169,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: latitude
   verbose_name: null
   is_dttm: false
@@ -179,7 +181,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: longitude
   verbose_name: null
   is_dttm: false
@@ -191,7 +193,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: last_on_ground
   verbose_name: null
   is_dttm: false
@@ -203,7 +205,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: on_ground
   verbose_name: null
   is_dttm: false
@@ -215,7 +217,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: spi
   verbose_name: null
   is_dttm: false
@@ -227,7 +229,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: last_contact
   verbose_name: null
   is_dttm: true
@@ -239,7 +241,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: time_position
   verbose_name: null
   is_dttm: true
@@ -251,7 +253,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: time
   verbose_name: null
   is_dttm: true
@@ -263,7 +265,7 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 - column_name: callsign
   verbose_name: null
   is_dttm: false
@@ -275,6 +277,6 @@ columns:
   expression: null
   description: null
   python_date_format: null
-  extra: null
+  extra: {}
 version: 1.0.0
 database_uuid: 116cd13e-4bbf-4328-99f2-4086b2dea455
