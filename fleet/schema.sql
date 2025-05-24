@@ -146,23 +146,20 @@ where time_position is not null and
       last_contact > time - 300;
 
 
-create view if not exists augmented_clean_states as
-select *,
-       lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
-       lagInFrame(on_ground) over lag_window as prev_on_ground,
-       lagInFrame(longitude) over lag_window as prev_longitude,
-       lagInFrame(latitude) over lag_window as prev_latitude,
-       lagInFrame(baro_altitude) over lag_window as prev_baro_altitude,
-       lagInFrame(geo_altitude) over lag_window as prev_geo_altitude,
-       leadInFrame(time_position::Nullable(DateTime)) over lead_window as next_time_position
-from clean_states
-window lag_window as (partition by icao24 order by time_position),
-       lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following);
-
-
 create view if not exists flight_endpoints as
-select *
-from augmented_clean_states
+select * from (
+    select *,
+           lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
+           lagInFrame(on_ground) over lag_window as prev_on_ground,
+           lagInFrame(longitude) over lag_window as prev_longitude,
+           lagInFrame(latitude) over lag_window as prev_latitude,
+           lagInFrame(baro_altitude) over lag_window as prev_baro_altitude,
+           lagInFrame(geo_altitude) over lag_window as prev_geo_altitude,
+           leadInFrame(time_position::Nullable(DateTime)) over lead_window as next_time_position
+    from clean_states
+    window lag_window as (partition by icao24 order by time_position),
+           lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
+)
 where on_ground != prev_on_ground or
       not on_ground and next_time_position is null;  -- the last airborne state is a moving endpoint
 
