@@ -13,13 +13,13 @@ position:
     meta:
       chartId: 4
       height: 50
-      sliceName: Hourly takeoffs
+      sliceName: Takeoffs
       uuid: 64f20c22-1fe3-453a-819c-f54099dff742
       width: 6
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-kSmOtBs0drZVv6dvSYoAv
+    - ROW-x6TQDnqPad1GLV7KSx-Kg
     type: CHART
   CHART-UTTOm3T4uGPhP1jQ9lCxx:
     children: []
@@ -87,15 +87,18 @@ metadata:
     - 1
     - 4
   map_label_colors:
-    'False': '#1FA8C9'
-    'True': '#454E7C'
-    count: '#1FA8C9'
+    Airborne: '#1FA8C9'
+    Ground: '#454E7C'
+    Landings: '#1FA8C9'
+    Takeoffs: '#454E7C'
   color_scheme: ''
   refresh_frequency: 0
   color_scheme_domain: []
   expanded_slices: {}
   label_colors: {}
-  shared_label_colors: []
+  shared_label_colors:
+  - 'True'
+  - 'False'
   timed_refresh_immune_slices: []
   cross_filters_enabled: true
   native_filter_configuration:
@@ -119,6 +122,29 @@ metadata:
     description: ''
     chartsInScope:
     - 1
+    - 4
+    tabsInScope: []
+  - id: NATIVE_FILTER-C5A9FPYmqCaaxqvREZ-wJ
+    controlValues:
+      enableEmptyFilter: false
+    name: Time grain
+    filterType: filter_timegrain
+    targets:
+    - datasetUuid: 9f3e7826-bc2e-4420-b744-4fcb364cd777
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded:
+      - 1
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 4
     tabsInScope: []
   default_filters: '{}'
 version: 1.0.0

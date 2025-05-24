@@ -118,7 +118,7 @@
           },
           "pluginVersion": "4.9.0",
           "queryType": "table",
-          "rawSql": "select time,\n  countIf(not on_ground) as airborne,\n  countIf(on_ground) as grounded\nfrom fleet.states\ngroup by time\norder by time desc\nlimit 1000;\n",
+          "rawSql": "select time,\n  countIf(not on_ground) as airborne,\n  countIf(on_ground) as ground\nfrom fleet.states\ngroup by time\norder by time desc\nlimit 1000;\n",
           "refId": "A"
         }
       ],
