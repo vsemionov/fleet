@@ -146,6 +146,45 @@ where time_position is not null and
       last_contact > time - 300;
 
 
+create view if not exists augmented_clean_states as
+select *,
+       lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
+       lagInFrame(on_ground) over lag_window as prev_on_ground,
+       lagInFrame(longitude) over lag_window as prev_longitude,
+       lagInFrame(latitude) over lag_window as prev_latitude,
+       lagInFrame(baro_altitude) over lag_window as prev_baro_altitude,
+       lagInFrame(geo_altitude) over lag_window as prev_geo_altitude,
+       leadInFrame(time_position::Nullable(DateTime)) over lead_window as next_time_position
+from clean_states
+window lag_window as (partition by icao24 order by time_position),
+       lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following);
+
+
+create view if not exists flight_endpoints as
+select *
+from augmented_clean_states
+where on_ground != prev_on_ground or
+      not on_ground and next_time_position is null;  -- the last airborne state is a moving endpoint
+
+
+create view if not exists clean_flights as
+select * from (
+    select *,
+           leadInFrame(time_position::Nullable(DateTime)) over lead_window as end_time_position,
+           leadInFrame(longitude) over lead_window as end_longitude,
+           leadInFrame(latitude) over lead_window as end_latitude,
+           leadInFrame(baro_altitude) over lead_window as end_baro_altitude,
+           leadInFrame(on_ground) over lead_window as end_on_ground,
+           leadInFrame(geo_altitude) over lead_window as end_geo_altitude,
+           end_time_position - time_position as duration,  -- first time in air to first time on ground (or last in air)
+           geoDistance(prev_longitude, prev_latitude, end_longitude, end_latitude) as distance  -- last time on ground to first time on ground (or last in air)
+    from flight_endpoints
+    window lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
+)
+where on_ground = false and  -- complete flights can be filtered with end_on_ground = true
+      time_position - prev_time_position < 3600;
+
+
 create table if not exists aircraft
 (
     icao24 String,
