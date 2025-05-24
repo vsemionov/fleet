@@ -150,7 +150,7 @@ create view if not exists flight_endpoints as
 select * from (
     select *,
            lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
-           lagInFrame(on_ground) over lag_window as prev_on_ground,
+           lagInFrame(on_ground::Nullable(Bool)) over lag_window as prev_on_ground,
            lagInFrame(longitude) over lag_window as prev_longitude,
            lagInFrame(latitude) over lag_window as prev_latitude,
            lagInFrame(baro_altitude) over lag_window as prev_baro_altitude,
@@ -161,7 +161,7 @@ select * from (
            lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
 )
 where on_ground != prev_on_ground or
-      not on_ground and next_time_position is null;  -- the last airborne state is a moving endpoint
+      on_ground = false and next_time_position is null;  -- the last airborne state of incomplete flights is a moving endpoint
 
 
 create view if not exists clean_flights as
@@ -179,6 +179,7 @@ select * from (
     window lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
 )
 where on_ground = false and  -- complete flights can be filtered with end_on_ground = true
+      prev_on_ground = true and  -- filter out last airborne states of incomplete flights
       time_position - prev_time_position < 3600;
 
 

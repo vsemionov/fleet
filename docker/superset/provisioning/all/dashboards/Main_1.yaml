@@ -145,7 +145,6 @@ metadata:
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
-    - 1
     - 4
     tabsInScope: []
   default_filters: '{}'
