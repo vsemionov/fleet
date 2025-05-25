@@ -61,7 +61,9 @@ def collect_states():
             raise ValueError('No states returned')
         remote_time = data['time']
         local_time = timestamp if timestamp is not None else request_time
-        if not abs(remote_time - local_time) < config.OPENSKY_MAX_TIME_DIFF:
+        tol = config.OPENSKY_MAX_TIME_DIFF
+        extra_tol = 0 if timestamp is not None else config.OPENSKY_TIMEOUT
+        if not local_time - tol < remote_time < local_time + tol + extra_tol:
             raise ValueError(f'Time mismatch ({remote_time} vs {local_time:.3f})')
 
     def convert(data: dict) -> tuple[int, list]:
