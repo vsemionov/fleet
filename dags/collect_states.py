@@ -26,7 +26,7 @@ logger = logging.getLogger('airflow.task')
     start_date=datetime(2025, 1, 1),
     catchup=False,
     default_args={
-        'retries': 5,
+        'retries': 0,  # no retries to avoid exhausting API quota
         'retry_delay': 60.0,
         'execution_timeout': timedelta(seconds=60),
     },
@@ -77,9 +77,10 @@ def collect_states():
 
     def adapt(states: list[State]):
         for state in states:
+            state.callsign = state.callsign.strip()
             if state.sensors is None:
                 state.sensors = []
-            if state.squawk == 'None':
+            if state.squawk == '':
                 state.squawk = None
 
     @task(outlets=[states_asset])
