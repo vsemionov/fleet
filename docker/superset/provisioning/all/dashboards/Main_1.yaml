@@ -277,5 +277,45 @@ metadata:
     - 4
     - 9
     tabsInScope: []
-  default_filters: '{}'
+  - id: NATIVE_FILTER_DIVIDER-mV-eZ_x4Z3WPah6FUxvGz
+    type: DIVIDER
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded: []
+    title: Flights
+    description: ''
+    chartsInScope: []
+    tabsInScope: []
+  - id: NATIVE_FILTER-0BN03-AXpTW6TUTXEKKDU
+    controlValues:
+      enableEmptyFilter: false
+      defaultToFirstItem: false
+      multiSelect: false
+      searchAllOptions: false
+      inverseSelection: false
+    name: Completed
+    filterType: filter_select
+    targets:
+    - column:
+        name: end_on_ground
+      datasetUuid: 63c1096e-bc8e-4f69-bad7-910c1b6bdf80
+    defaultDataMask:
+      extraFormData: {}
+      filterState: {}
+      ownState: {}
+    cascadeParentIds: []
+    scope:
+      rootPath:
+      - ROOT_ID
+      excluded:
+      - 1
+      - 4
+      - 7
+      - 8
+    type: NATIVE_FILTER
+    description: ''
+    chartsInScope:
+    - 9
+    tabsInScope: []
 version: 1.0.0
