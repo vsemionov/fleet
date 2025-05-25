@@ -118,7 +118,7 @@ primary key time_position
 order by (time_position, icao24);
 
 
-create or replace materialized view clean_states_mv to clean_states as
+create materialized view if not exists clean_states_mv to clean_states as
 select *
 from states
 where time_position is not null and
