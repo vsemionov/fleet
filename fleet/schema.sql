@@ -178,7 +178,7 @@ select * from (
     from flight_endpoints
     window lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
 )
-where on_ground = false and  -- complete flights can be filtered with end_on_ground = true
+where on_ground = false and  -- to filter flights having a 2nd endpoint: end_time_position is not null; for complete flights: end_on_ground = true
       prev_on_ground = true and  -- filter out last airborne states of incomplete flights
       time_position - prev_time_position < 3600;
 
