@@ -118,26 +118,8 @@ primary key time_position
 order by (time_position, icao24);
 
 
-create materialized view if not exists clean_states_mv to clean_states as
-select time,
-       icao24,
-       callsign,
-       origin_country,
-       time_position,
-       last_contact,
-       longitude,
-       latitude,
-       baro_altitude,
-       on_ground,
-       velocity,
-       true_track,
-       vertical_rate,
-       sensors,
-       geo_altitude,
-       squawk,
-       spi,
-       position_source,
-       category
+create or replace materialized view clean_states_mv to clean_states as
+select *
 from states
 where time_position is not null and
       longitude is not null and
@@ -146,7 +128,7 @@ where time_position is not null and
       last_contact > time - 300;
 
 
-create view if not exists flight_endpoints as
+create or replace view flight_endpoints as
 select * from (
     select *,
            lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
@@ -164,7 +146,7 @@ where on_ground != prev_on_ground or
       on_ground = false and next_time_position is null;  -- the last airborne state of incomplete flights is a moving endpoint
 
 
-create view if not exists clean_flights as
+create or replace view clean_flights as
 select * from (
     select *,
            leadInFrame(time_position::Nullable(DateTime)) over lead_window as end_time_position,
@@ -180,10 +162,10 @@ select * from (
 )
 where on_ground = false and  -- to filter flights having a 2nd endpoint: end_time_position is not null; for complete flights: end_on_ground = true
       prev_on_ground = true and  -- filter out last airborne states of incomplete flights
-      time_position - prev_time_position < 3600;
+      time_position - prev_time_position < 1800;
 
 
-create table if not exists aircraft
+create or replace table aircraft
 (
     icao24 String,
     timestamp Nullable(DateTime),
@@ -218,14 +200,14 @@ create table if not exists aircraft
     typecode String,
     vdl UInt8
 )
-engine = MergeTree
+engine = ReplacingMergeTree
 primary key icao24
 order by icao24;
 
 insert into aircraft
 select * from file('/var/lib/clickhouse/user_files/aircraft.parquet', 'Parquet');
 
-create dictionary if not exists aircraft_dict
+create or replace dictionary aircraft_dict
 (
     icao24 String,
     timestamp Nullable(DateTime),
@@ -265,26 +247,11 @@ source(clickhouse(table 'aircraft' password '$CLICKHOUSE_PASSWORD'))
 layout(complex_key_hashed_array())
 lifetime(0);
 
-select count() from aircraft_dict format null; -- trigger population of the dictionary
+select count(*) from aircraft_dict format null;  -- trigger population of the dictionary
 
 
-create view if not exists clean_states_aircraft as
-select time_position,
-       icao24,
-       callsign,
-       origin_country,
-       longitude,
-       latitude,
-       baro_altitude,
-       on_ground,
-       velocity,
-       true_track,
-       vertical_rate,
-       geo_altitude,
-       squawk,
-       spi,
-       position_source,
-       category,
+create or replace view clean_states_aircraft as
+select *,
        dictGet('aircraft_dict', 'engines', icao24) as engines,
        dictGet('aircraft_dict', 'manufacturerName', icao24) as manufacturerName,
        dictGet('aircraft_dict', 'model', icao24) as model,

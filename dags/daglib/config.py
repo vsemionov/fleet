@@ -4,6 +4,7 @@ import os
 POSTGRES_CONN_ID = 'postgres'
 CLICKHOUSE_CONN_ID = 'clickhouse'
 SPARK_CONN_ID = 'spark'
+OPENSKY_CONN_ID = 'opensky'
 
 POSTGRES_DEFAULT_PORT = 5432
 CLICKHOUSE_DEFAULT_PORT = 9000
@@ -12,3 +13,13 @@ SPARK_DEFAULT_PORT = 7077
 
 SPARK_POSTGRES_PACKAGES = os.environ['POSTGRES_JDBC_DRIVER']
 SPARK_CLICKHOUSE_PACKAGES = os.environ['SPARK_CLICKHOUSE_CONNECTOR']
+
+AUTH_TOKENS_TABLE = 'auth_tokens'
+STATES_TABLE = 'states'
+
+OPENSKY_AUTH_URL = 'https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token'
+OPENSKY_STATES_URL = 'https://opensky-network.org/api/states/all'
+OPENSKY_STATES_PARAMS = {'extended': 1}
+OPENSKY_TIMEOUT = 30
+OPENSKY_MAX_TIME_DIFF = 300
+OPENSKY_MIN_AUTH_TTL = 300

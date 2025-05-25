@@ -23,6 +23,9 @@ fi
 echo "Installing deployment dependencies"
 docker compose exec clickhouse bash -c "dpkg -l gettext || (apt update; apt install -y gettext; ARG=\$?; rm -rf /var/lib/apt/lists/* || exit 1; exit \$ARG)"
 
+echo "Creating database schema"
+docker compose exec postgres psql -U fleet -d fleet -f /opt/fleet/db.sql
+
 echo "Creating warehouse schema"
 docker compose exec clickhouse bash -c "envsubst </opt/fleet/schema.sql | clickhouse client -d fleet"
 
@@ -30,6 +33,7 @@ echo "Creating Airflow connections"
 docker compose exec airflow bash -c "airflow connections get postgres || airflow connections add --conn-type postgres --conn-host postgres --conn-login fleet --conn-password "\$FLEET_DATABASE_PASSWORD" --conn-schema fleet postgres"
 docker compose exec airflow bash -c "airflow connections get clickhouse || airflow connections add --conn-type sqlite --conn-host clickhouse --conn-login fleet --conn-password "\$FLEET_WAREHOUSE_PASSWORD" --conn-schema fleet clickhouse"  # type sqlite as per airflow-clickhouse-plugin documentation
 docker compose exec airflow bash -c "airflow connections get spark || airflow connections add --conn-type spark --conn-host spark spark"
+docker compose exec airflow bash -c "airflow connections get opensky || airflow connections add --conn-type generic --conn-login "\$OPENSKY_CLIENT_ID" --conn-password "\$OPENSKY_CLIENT_SECRET" opensky"
 
 echo "Enabling Airflow DAGs"
 #docker compose exec airflow bash -c "airflow dags unpause process_states"

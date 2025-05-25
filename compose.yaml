@@ -65,6 +65,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker/postgres/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./fleet/db.sql:/opt/fleet/db.sql
     ports:
       - '127.0.0.1:5432:5432'
     hostname: postgres
@@ -121,6 +122,8 @@ services:
       _AIRFLOW_WWW_USER_EMAIL: admin@localhost
       FLEET_DATABASE_PASSWORD: ${FLEET_DATABASE_PASSWORD:-fleet}
       FLEET_WAREHOUSE_PASSWORD: ${FLEET_WAREHOUSE_PASSWORD:-fleet}
+      OPENSKY_CLIENT_ID: ${OPENSKY_CLIENT_ID:?required}
+      OPENSKY_CLIENT_SECRET: ${OPENSKY_CLIENT_SECRET:?required}
     ports:
       - '127.0.0.1:8080:8080'
     hostname: airflow
