@@ -147,22 +147,20 @@ where on_ground != prev_on_ground or
 
 
 create or replace view clean_flights as
-select * from (
-    select *,
-           leadInFrame(time_position::Nullable(DateTime)) over lead_window as end_time_position,
-           leadInFrame(longitude) over lead_window as end_longitude,
-           leadInFrame(latitude) over lead_window as end_latitude,
-           leadInFrame(baro_altitude) over lead_window as end_baro_altitude,
-           leadInFrame(on_ground) over lead_window as end_on_ground,
-           leadInFrame(geo_altitude) over lead_window as end_geo_altitude,
-           end_time_position - time_position as duration,  -- first time in air to first time on ground (or last in air)
-           geoDistance(prev_longitude, prev_latitude, end_longitude, end_latitude) as distance  -- last time on ground to first time on ground (or last in air)
-    from flight_endpoints
-    window lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
-)
+select *,
+       leadInFrame(time_position::Nullable(DateTime)) over lead_window as end_time_position,
+       leadInFrame(longitude) over lead_window as end_longitude,
+       leadInFrame(latitude) over lead_window as end_latitude,
+       leadInFrame(baro_altitude) over lead_window as end_baro_altitude,
+       leadInFrame(on_ground) over lead_window as end_on_ground,
+       leadInFrame(geo_altitude) over lead_window as end_geo_altitude,
+       end_time_position - time_position as duration,  -- first time in air to first time on ground (or last in air)
+       geoDistance(prev_longitude, prev_latitude, end_longitude, end_latitude) as distance  -- last time on ground to first time on ground (or last in air)
+from flight_endpoints
 where on_ground = false and  -- to filter flights having a 2nd endpoint: end_time_position is not null; for complete flights: end_on_ground = true
       prev_on_ground = true and  -- filter out last airborne states of incomplete flights
-      time_position - prev_time_position < 1800;
+      time_position - prev_time_position < 1800
+window lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following);
 
 
 create or replace table aircraft
