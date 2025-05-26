@@ -168,33 +168,33 @@ position:
     type: ROW
 metadata:
   chart_configuration:
-    '1':
-      id: 1
+    '3':
+      id: 3
       crossFilters:
         scope: global
         chartsInScope:
+        - 1
+        - 2
         - 4
-        - 7
-        - 8
-        - 9
+        - 5
     '4':
       id: 4
       crossFilters:
         scope: global
         chartsInScope:
         - 1
-        - 7
-        - 8
-        - 9
-    '7':
-      id: 7
+        - 2
+        - 3
+        - 5
+    '5':
+      id: 5
       crossFilters:
         scope: global
         chartsInScope:
         - 1
+        - 2
+        - 3
         - 4
-        - 8
-        - 9
   global_chart_configuration:
     scope:
       rootPath:
@@ -202,10 +202,10 @@ metadata:
       excluded: []
     chartsInScope:
     - 1
+    - 2
+    - 3
     - 4
-    - 7
-    - 8
-    - 9
+    - 5
   map_label_colors:
     Airborne: '#1FA8C9'
     Ground: '#454E7C'
@@ -243,10 +243,10 @@ metadata:
     description: ''
     chartsInScope:
     - 1
+    - 2
+    - 3
     - 4
-    - 7
-    - 8
-    - 9
+    - 5
     tabsInScope: []
   - id: NATIVE_FILTER-C5A9FPYmqCaaxqvREZ-wJ
     controlValues:
@@ -287,7 +287,7 @@ metadata:
     description: ''
     chartsInScope: []
     tabsInScope: []
-  - id: NATIVE_FILTER-0BN03-AXpTW6TUTXEKKDU
+  - id: NATIVE_FILTER-RFKSAMI4Vt1CDoHTXGof0
     controlValues:
       enableEmptyFilter: false
       defaultToFirstItem: false
@@ -299,7 +299,7 @@ metadata:
     targets:
     - column:
         name: end_on_ground
-      datasetUuid: 63c1096e-bc8e-4f69-bad7-910c1b6bdf80
+      datasetUuid: fb3eacc5-27d0-4686-b45d-cf7ec76639c6
     defaultDataMask:
       extraFormData: {}
       filterState: {}
@@ -309,13 +309,10 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
+      - 1
+      - 3
       - 4
       - 5
-      - 3
-      - 1
     type: NATIVE_FILTER
     description: ''
-    chartsInScope:
-    - 9
-    tabsInScope: []
 version: 1.0.0
