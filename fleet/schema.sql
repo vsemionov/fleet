@@ -44,7 +44,7 @@ create table if not exists states
 
     constraint check_time check coalesce(time >= time_position, true) and time >= last_contact,
     constraint check_icao24 check match(icao24, '^[0-9a-f]+$'),
-    constraint check_origin_country check notEmpty(origin_country),
+    -- constraint check_origin_country check notEmpty(origin_country),  -- occurs occasionally
     constraint check_time_position_last_contact check coalesce(time_position <= last_contact, true),
     constraint check_longitude check coalesce(-180 <= longitude <= 180, true),
     constraint check_latitude check coalesce(-90 <= latitude <= 90, true),
@@ -103,7 +103,7 @@ create table if not exists clean_states
 
     constraint check_time check time >= time_position and time >= last_contact,
     constraint check_icao24 check match(icao24, '^[0-9a-f]+$'),
-    constraint check_origin_country check notEmpty(origin_country),
+    -- constraint check_origin_country check notEmpty(origin_country),  -- occurs occasionally
     constraint check_time_position check time_position > time - 300,
     constraint check_last_contact check last_contact > time - 300,
     constraint check_time_position_last_contact check time_position <= last_contact,
