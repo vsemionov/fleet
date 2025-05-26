@@ -36,3 +36,7 @@ EXPLORE_FORM_DATA_CACHE_CONFIG = {
     'CACHE_KEY_PREFIX': 'superset_explore_',
     'CACHE_REDIS_URL': os.environ['SUPERSET_REDIS_URL'],
 }
+
+FEATURE_FLAGS = {
+    'ENABLE_TEMPLATE_PROCESSING': True,
+}
