@@ -11,7 +11,7 @@ position:
     children: []
     id: CHART-Oa1H9QLBoXjWN_c5HVvrT
     meta:
-      chartId: 4
+      chartId: 5
       height: 50
       sliceName: Flight endpoints
       uuid: 64f20c22-1fe3-453a-819c-f54099dff742
@@ -25,7 +25,7 @@ position:
     children: []
     id: CHART-UTTOm3T4uGPhP1jQ9lCxx
     meta:
-      chartId: 1
+      chartId: 4
       height: 50
       sliceName: Active aircraft
       uuid: eb7662f4-16f9-4b4a-b6ff-70bb7a0a19e9
@@ -39,7 +39,7 @@ position:
     children: []
     id: CHART-explore-7-1
     meta:
-      chartId: 7
+      chartId: 3
       height: 50
       sliceName: Aircraft states
       uuid: 312af461-03fb-4d35-9c8e-21b66107ef59
@@ -53,7 +53,7 @@ position:
     children: []
     id: CHART-explore-8-1
     meta:
-      chartId: 8
+      chartId: 1
       height: 50
       sliceName: Aircraft radar
       uuid: c5650e6c-db8b-44fe-8b62-1a7ba057f3ae
@@ -67,7 +67,7 @@ position:
     children: []
     id: CHART-explore-9-1
     meta:
-      chartId: 9
+      chartId: 2
       height: 50
       sliceName: Flight radar
       uuid: 5cfea3a2-0baf-4f4d-859e-0d5883a1c9c7
@@ -267,9 +267,9 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 7
-      - 8
-      - 9
+      - 3
+      - 1
+      - 2
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
@@ -309,10 +309,10 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 1
       - 4
-      - 7
-      - 8
+      - 5
+      - 3
+      - 1
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
