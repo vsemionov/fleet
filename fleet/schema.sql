@@ -128,7 +128,7 @@ where time_position is not null and
       last_contact > time - 300;
 
 
-create or replace view flight_endpoints as
+create or replace view get_flight_endpoints as
 select * from (
     select *,
            lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
@@ -139,6 +139,8 @@ select * from (
            lagInFrame(geo_altitude::Nullable(Float32)) over lag_window as prev_geo_altitude,
            leadInFrame(time_position::Nullable(DateTime)) over lead_window as next_time_position
     from clean_states
+    where coalesce(time_position >= {start_time:Nullable(DateTime)}, true) and
+          coalesce(time_position < {end_time:Nullable(DateTime)}, true)
     window lag_window as (partition by icao24 order by time_position),
            lead_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
 )
@@ -146,7 +148,7 @@ where on_ground != prev_on_ground or
       on_ground = false and next_time_position is null;  -- the last airborne state of incomplete flights is a moving endpoint
 
 
-create or replace view clean_flights as
+create or replace view get_clean_flights as
 select *,
        leadInFrame(time_position::Nullable(DateTime)) over lead_window as end_time_position,
        leadInFrame(on_ground::Nullable(Bool)) over lead_window as end_on_ground,
@@ -156,7 +158,7 @@ select *,
        leadInFrame(geo_altitude::Nullable(Float32)) over lead_window as end_geo_altitude,
        end_time_position - time_position as duration,  -- first time in air to first time on ground (or last in air)
        geoDistance(prev_longitude, prev_latitude, end_longitude, end_latitude) as distance  -- last time on ground to first time on ground (or last in air)
-from flight_endpoints
+from get_flight_endpoints(start_time={start_time:Nullable(DateTime)}, end_time={end_time:Nullable(DateTime)})
 where on_ground = false and  -- to filter flights having a 2nd endpoint: end_time_position is not null; for complete flights: end_on_ground = true
       prev_on_ground = true and  -- filter out last airborne states of incomplete flights
       time_position - prev_time_position < 1800
