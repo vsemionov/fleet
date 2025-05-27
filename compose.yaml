@@ -217,6 +217,7 @@ services:
       SUPERSET_ADMIN_EMAIL: admin@localhost
       READER_DATABASE_PASSWORD: ${READER_DATABASE_PASSWORD:-reader}
       READER_WAREHOUSE_PASSWORD: ${READER_WAREHOUSE_PASSWORD:-reader}
+      MAPBOX_API_KEY: ${MAPBOX_API_KEY:-}
     volumes:
       - ./docker/superset/bootstrap.sh:/opt/fleet/bootstrap.sh
       - ./docker/superset/superset_config.py:/opt/fleet/superset_config.py
