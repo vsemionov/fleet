@@ -4,7 +4,7 @@ certified_by: null
 certification_details: null
 viz_type: echarts_timeseries_line
 params:
-  datasource: 3__table
+  datasource: 4__table
   viz_type: echarts_timeseries_line
   slice_id: 7
   x_axis: time
@@ -62,7 +62,7 @@ params:
   extra_form_data: {}
   dashboards:
   - 1
-query_context: '{"datasource": {"id": 3, "type": "table"}, "force": false, "queries":
+query_context: '{"datasource": {"id": 4, "type": "table"}, "force": false, "queries":
   [{"filters": [{"col": "time", "op": "TEMPORAL_RANGE", "val": "No filter"}], "extras":
   {"having": "", "where": ""}, "applied_time_extras": {}, "columns": [{"columnType":
   "BASE_AXIS", "sqlExpression": "time", "label": "time", "expressionType": "SQL"},
@@ -76,7 +76,7 @@ query_context: '{"datasource": {"id": 3, "type": "table"}, "force": false, "quer
   ["time"], "columns": ["on_ground"], "aggregates": {"count": {"operator": "mean"}},
   "drop_missing_columns": false}}, {"operation": "rename", "options": {"columns":
   {"count": null}, "level": 0, "inplace": true}}, {"operation": "flatten"}]}], "form_data":
-  {"datasource": "3__table", "viz_type": "echarts_timeseries_line", "slice_id": 7,
+  {"datasource": "4__table", "viz_type": "echarts_timeseries_line", "slice_id": 7,
   "x_axis": "time", "x_axis_sort_asc": true, "x_axis_sort_series": "name", "x_axis_sort_series_ascending":
   true, "metrics": ["count"], "groupby": [{"datasourceWarning": false, "expressionType":
   "SQL", "label": "on_ground", "sqlExpression": "case when on_ground then ''Ground''

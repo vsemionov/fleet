@@ -11,7 +11,7 @@ position:
     children: []
     id: CHART-2h3asUezvvuRBkKZlbVSt
     meta:
-      chartId: 7
+      chartId: 1
       height: 50
       sliceName: Fastest aircraft
       uuid: 62c1201d-b829-4627-bd1b-c2f9743ed56d
@@ -25,7 +25,7 @@ position:
     children: []
     id: CHART-Oa1H9QLBoXjWN_c5HVvrT
     meta:
-      chartId: 5
+      chartId: 4
       height: 50
       sliceName: Flight endpoints
       uuid: 64f20c22-1fe3-453a-819c-f54099dff742
@@ -39,7 +39,7 @@ position:
     children: []
     id: CHART-UTTOm3T4uGPhP1jQ9lCxx
     meta:
-      chartId: 4
+      chartId: 2
       height: 50
       sliceName: Active aircraft
       uuid: eb7662f4-16f9-4b4a-b6ff-70bb7a0a19e9
@@ -53,7 +53,7 @@ position:
     children: []
     id: CHART-eNJwK8KucmndeHoSS1vqX
     meta:
-      chartId: 6
+      chartId: 7
       height: 50
       sliceName: Longest traveling aircraft
       uuid: 7c9cf4f8-bf3c-4436-a7f8-5b95b73352c2
@@ -67,7 +67,7 @@ position:
     children: []
     id: CHART-explore-8-1
     meta:
-      chartId: 1
+      chartId: 3
       height: 50
       sliceName: Aircraft map
       uuid: c5650e6c-db8b-44fe-8b62-1a7ba057f3ae
@@ -81,7 +81,7 @@ position:
     children: []
     id: CHART-explore-9-1
     meta:
-      chartId: 2
+      chartId: 5
       height: 50
       sliceName: Flight map
       uuid: 5cfea3a2-0baf-4f4d-859e-0d5883a1c9c7
@@ -95,7 +95,7 @@ position:
     children: []
     id: CHART-oXYvGKeQEbZ3A8DPGF_Dd
     meta:
-      chartId: 3
+      chartId: 6
       height: 50
       sliceName: Aircraft states
       uuid: 312af461-03fb-4d35-9c8e-21b66107ef59
@@ -351,11 +351,11 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 1
-      - 2
       - 3
+      - 5
       - 6
       - 7
+      - 1
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
@@ -394,16 +394,15 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 5
       - 4
-      - 1
+      - 2
       - 3
       - 6
       - 7
+      - 1
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
     - 2
     tabsInScope: []
-  default_filters: '{}'
 version: 1.0.0
