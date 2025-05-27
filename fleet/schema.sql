@@ -167,6 +167,23 @@ where on_ground = false and  -- to filter flights having a 2nd endpoint: end_tim
       time_position - prev_time_position < 1800;
 
 
+create or replace view get_motions as
+select * from (
+    select *,
+           lagInFrame(time_position::Nullable(DateTime)) over lag_window as prev_time_position,
+           lagInFrame(longitude::Nullable(Float64)) over lag_window as prev_longitude,
+           lagInFrame(latitude::Nullable(Float64)) over lag_window as prev_latitude,
+           time_position - prev_time_position as delta_time_position,
+           geoDistance(prev_longitude, prev_latitude, longitude, latitude) as distance,
+           distance / delta_time_position as observed_velocity
+    from clean_states
+    where coalesce(time_position >= {start_time:Nullable(DateTime)}, true) and
+          coalesce(time_position < {end_time:Nullable(DateTime)}, true)
+    window lag_window as (partition by icao24 order by time_position)
+)
+where prev_time_position is not null;
+
+
 create or replace table aircraft
 (
     icao24 String,
@@ -208,6 +225,8 @@ order by icao24;
 
 insert into aircraft
 select * from file('/var/lib/clickhouse/user_files/aircraft.parquet', 'Parquet');
+
+optimize table aircraft final;
 
 create or replace dictionary aircraft_dict
 (
