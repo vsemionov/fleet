@@ -1,0 +1,68 @@
+slice_name: Longest traveling aircraft
+description: null
+certified_by: null
+certification_details: null
+viz_type: table
+params:
+  datasource: 7__table
+  viz_type: table
+  query_mode: aggregate
+  groupby:
+  - icao24
+  time_grain_sqla: P1D
+  temporal_columns_lookup:
+    time: true
+    time_position: true
+    last_contact: true
+    prev_time_position: true
+  metrics:
+  - expressionType: SQL
+    sqlExpression: SUM(distance) / 1000
+    column: null
+    aggregate: null
+    datasourceWarning: false
+    hasCustomLabel: false
+    label: SUM(distance) / 1000
+    optionName: metric_3dt25hp88af_8e25jvrk2e8
+  all_columns: []
+  percent_metrics: []
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: time_position
+    operator: TEMPORAL_RANGE
+    operatorId: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_shxqmsqqpw_pasg3g8fqvc
+  order_by_cols: []
+  row_limit: 1000
+  server_page_length: 10
+  order_desc: true
+  show_totals: false
+  table_timestamp_format: smart_date
+  allow_render_html: true
+  show_cell_bars: true
+  color_pn: true
+  comparison_color_scheme: Green
+  conditional_formatting: []
+  comparison_type: values
+  extra_form_data: {}
+  dashboards:
+  - 1
+query_context: '{"datasource":{"id":7,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time_position","op":"TEMPORAL_RANGE","val":"No
+  filter"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":["icao24"],"metrics":[{"expressionType":"SQL","sqlExpression":"SUM(distance)
+  / 1000","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"SUM(distance)
+  / 1000","optionName":"metric_3dt25hp88af_8e25jvrk2e8"}],"orderby":[[{"expressionType":"SQL","sqlExpression":"SUM(distance)
+  / 1000","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"SUM(distance)
+  / 1000","optionName":"metric_3dt25hp88af_8e25jvrk2e8"},false]],"annotation_layers":[],"row_limit":1000,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{},"post_processing":[],"time_offsets":[]}],"form_data":{"datasource":"7__table","viz_type":"table","query_mode":"aggregate","groupby":["icao24"],"time_grain_sqla":"P1D","temporal_columns_lookup":{"time":true,"time_position":true,"last_contact":true,"prev_time_position":true},"metrics":[{"expressionType":"SQL","sqlExpression":"SUM(distance)
+  / 1000","column":null,"aggregate":null,"datasourceWarning":false,"hasCustomLabel":false,"label":"SUM(distance)
+  / 1000","optionName":"metric_3dt25hp88af_8e25jvrk2e8"}],"all_columns":[],"percent_metrics":[],"adhoc_filters":[{"expressionType":"SIMPLE","subject":"time_position","operator":"TEMPORAL_RANGE","operatorId":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_shxqmsqqpw_pasg3g8fqvc"}],"order_by_cols":[],"row_limit":1000,"server_page_length":10,"order_desc":true,"show_totals":false,"table_timestamp_format":"smart_date","allow_render_html":true,"show_cell_bars":true,"color_pn":true,"comparison_color_scheme":"Green","conditional_formatting":[],"comparison_type":"values","extra_form_data":{},"dashboards":[1],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 7c9cf4f8-bf3c-4436-a7f8-5b95b73352c2
+version: 1.0.0
+dataset_uuid: 740b7f61-ca2f-4735-a20a-2edfd003aee4

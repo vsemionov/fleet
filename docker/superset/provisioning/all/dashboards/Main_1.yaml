@@ -7,6 +7,20 @@ certification_details: ''
 published: true
 uuid: d521856a-35f3-439b-ac28-dd05b6c76d20
 position:
+  CHART-2h3asUezvvuRBkKZlbVSt:
+    children: []
+    id: CHART-2h3asUezvvuRBkKZlbVSt
+    meta:
+      chartId: 7
+      height: 50
+      sliceName: Fastest aircraft
+      uuid: 62c1201d-b829-4627-bd1b-c2f9743ed56d
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-l5Gbq5IKf9QATDlZ8f1lG
+    type: CHART
   CHART-Oa1H9QLBoXjWN_c5HVvrT:
     children: []
     id: CHART-Oa1H9QLBoXjWN_c5HVvrT
@@ -35,19 +49,19 @@ position:
     - GRID_ID
     - ROW-kSmOtBs0drZVv6dvSYoAv
     type: CHART
-  CHART-explore-7-1:
+  CHART-eNJwK8KucmndeHoSS1vqX:
     children: []
-    id: CHART-explore-7-1
+    id: CHART-eNJwK8KucmndeHoSS1vqX
     meta:
-      chartId: 3
+      chartId: 6
       height: 50
-      sliceName: Aircraft states
-      uuid: 312af461-03fb-4d35-9c8e-21b66107ef59
+      sliceName: Longest traveling aircraft
+      uuid: 7c9cf4f8-bf3c-4436-a7f8-5b95b73352c2
       width: 6
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-70qJ91fojK4raU898H8bc
+    - ROW-l5Gbq5IKf9QATDlZ8f1lG
     type: CHART
   CHART-explore-8-1:
     children: []
@@ -55,7 +69,7 @@ position:
     meta:
       chartId: 1
       height: 50
-      sliceName: Aircraft radar
+      sliceName: Aircraft map
       uuid: c5650e6c-db8b-44fe-8b62-1a7ba057f3ae
       width: 6
     parents:
@@ -69,23 +83,39 @@ position:
     meta:
       chartId: 2
       height: 50
-      sliceName: Flight radar
+      sliceName: Flight map
       uuid: 5cfea3a2-0baf-4f4d-859e-0d5883a1c9c7
       width: 6
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-c72GkyvkLTSt-v5x5wO4V
+    - ROW-1xb1bnRM_mc1Jrn_uERlo
+    type: CHART
+  CHART-oXYvGKeQEbZ3A8DPGF_Dd:
+    children: []
+    id: CHART-oXYvGKeQEbZ3A8DPGF_Dd
+    meta:
+      chartId: 3
+      height: 50
+      sliceName: Aircraft states
+      uuid: 312af461-03fb-4d35-9c8e-21b66107ef59
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-r0LygVrX1g28lvfGum4z3
     type: CHART
   DASHBOARD_VERSION_KEY: v2
   GRID_ID:
     children:
     - HEADER-01Nvr6TbT8i3wBQBr6epp
-    - ROW-70qJ91fojK4raU898H8bc
+    - ROW-r0LygVrX1g28lvfGum4z3
     - HEADER-05JRcJxkiMriwbaY6a_ZQ
     - ROW-kSmOtBs0drZVv6dvSYoAv
     - HEADER-TbHgS1nnj8IGghmDX99Tp
     - ROW-1xb1bnRM_mc1Jrn_uERlo
+    - HEADER-JiRMaVE3LmqPFLiD9SSlW
+    - ROW-l5Gbq5IKf9QATDlZ8f1lG
     id: GRID_ID
     parents:
     - ROOT_ID
@@ -108,6 +138,17 @@ position:
       background: BACKGROUND_TRANSPARENT
       headerSize: MEDIUM_HEADER
       text: Up to date
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: HEADER
+  HEADER-JiRMaVE3LmqPFLiD9SSlW:
+    children: []
+    id: HEADER-JiRMaVE3LmqPFLiD9SSlW
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      headerSize: MEDIUM_HEADER
+      text: Records
     parents:
     - ROOT_ID
     - GRID_ID
@@ -145,21 +186,32 @@ position:
     - ROOT_ID
     - GRID_ID
     type: ROW
-  ROW-70qJ91fojK4raU898H8bc:
+  ROW-kSmOtBs0drZVv6dvSYoAv:
     children:
-    - CHART-explore-7-1
-    id: ROW-70qJ91fojK4raU898H8bc
+    - CHART-UTTOm3T4uGPhP1jQ9lCxx
+    - CHART-Oa1H9QLBoXjWN_c5HVvrT
+    id: ROW-kSmOtBs0drZVv6dvSYoAv
     meta:
       background: BACKGROUND_TRANSPARENT
     parents:
     - ROOT_ID
     - GRID_ID
     type: ROW
-  ROW-kSmOtBs0drZVv6dvSYoAv:
+  ROW-l5Gbq5IKf9QATDlZ8f1lG:
     children:
-    - CHART-UTTOm3T4uGPhP1jQ9lCxx
-    - CHART-Oa1H9QLBoXjWN_c5HVvrT
-    id: ROW-kSmOtBs0drZVv6dvSYoAv
+    - CHART-eNJwK8KucmndeHoSS1vqX
+    - CHART-2h3asUezvvuRBkKZlbVSt
+    id: ROW-l5Gbq5IKf9QATDlZ8f1lG
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-r0LygVrX1g28lvfGum4z3:
+    children:
+    - CHART-oXYvGKeQEbZ3A8DPGF_Dd
+    id: ROW-r0LygVrX1g28lvfGum4z3
     meta:
       background: BACKGROUND_TRANSPARENT
     parents:
@@ -177,6 +229,8 @@ metadata:
         - 2
         - 4
         - 5
+        - 6
+        - 7
     '4':
       id: 4
       crossFilters:
@@ -186,6 +240,8 @@ metadata:
         - 2
         - 3
         - 5
+        - 6
+        - 7
     '5':
       id: 5
       crossFilters:
@@ -195,6 +251,30 @@ metadata:
         - 2
         - 3
         - 4
+        - 6
+        - 7
+    '6':
+      id: 6
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 7
+    '7':
+      id: 7
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
   global_chart_configuration:
     scope:
       rootPath:
@@ -206,11 +286,13 @@ metadata:
     - 3
     - 4
     - 5
+    - 6
+    - 7
   map_label_colors:
     Airborne: '#1FA8C9'
     Ground: '#454E7C'
-    Takeoffs: '#454E7C'
     Landings: '#1FA8C9'
+    Takeoffs: '#454E7C'
   color_scheme: ''
   refresh_frequency: 0
   color_scheme_domain: []
@@ -247,6 +329,8 @@ metadata:
     - 3
     - 4
     - 5
+    - 6
+    - 7
     tabsInScope: []
   - id: NATIVE_FILTER-C5A9FPYmqCaaxqvREZ-wJ
     controlValues:
@@ -267,15 +351,16 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
-      - 3
       - 1
       - 2
+      - 3
+      - 6
+      - 7
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
-    - 1
     - 4
-    - 9
+    - 5
     tabsInScope: []
   - id: NATIVE_FILTER_DIVIDER-mV-eZ_x4Z3WPah6FUxvGz
     type: DIVIDER
@@ -309,10 +394,16 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
+      - 5
+      - 4
       - 1
       - 3
-      - 4
-      - 5
+      - 6
+      - 7
     type: NATIVE_FILTER
     description: ''
+    chartsInScope:
+    - 2
+    tabsInScope: []
+  default_filters: '{}'
 version: 1.0.0
