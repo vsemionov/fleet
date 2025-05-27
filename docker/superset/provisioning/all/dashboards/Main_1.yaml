@@ -21,6 +21,34 @@ position:
     - GRID_ID
     - ROW-l5Gbq5IKf9QATDlZ8f1lG
     type: CHART
+  CHART-BFh5VYvDoZQfbqt4OUNID:
+    children: []
+    id: CHART-BFh5VYvDoZQfbqt4OUNID
+    meta:
+      chartId: 8
+      height: 27
+      sliceName: Dataset size
+      uuid: 67e71c85-4a91-4b6a-a0e6-e611125ab494
+      width: 3
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-U-O0y8_5SknBOwYKLRZ9n
+    type: CHART
+  CHART-LOsDqcTKrLrk0tzUkV9B3:
+    children: []
+    id: CHART-LOsDqcTKrLrk0tzUkV9B3
+    meta:
+      chartId: 9
+      height: 50
+      sliceName: Origin countries
+      uuid: a654090a-2213-4ff7-b39a-ae16fd0137a5
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-k6QLLH5gXHDWeupc_OYOx
+    type: CHART
   CHART-Oa1H9QLBoXjWN_c5HVvrT:
     children: []
     id: CHART-Oa1H9QLBoXjWN_c5HVvrT
@@ -103,19 +131,50 @@ position:
     parents:
     - ROOT_ID
     - GRID_ID
-    - ROW-r0LygVrX1g28lvfGum4z3
+    - ROW-lz9rgX2qtb4-oe2NnRgWM
+    type: CHART
+  CHART-psQeIXy_WijjbBa6TJ_gq:
+    children: []
+    id: CHART-psQeIXy_WijjbBa6TJ_gq
+    meta:
+      chartId: 11
+      height: 50
+      sliceName: Altitudes (barometric)
+      uuid: a9630259-104b-4613-9092-b6bb1a34637d
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-lz9rgX2qtb4-oe2NnRgWM
+    type: CHART
+  CHART-yVI9j7lFKHa3uuxNbQmyW:
+    children: []
+    id: CHART-yVI9j7lFKHa3uuxNbQmyW
+    meta:
+      chartId: 10
+      height: 50
+      sliceName: Categories
+      uuid: 4196cd3b-5720-45fd-a34e-1544fd6e0e6e
+      width: 6
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    - ROW-k6QLLH5gXHDWeupc_OYOx
     type: CHART
   DASHBOARD_VERSION_KEY: v2
   GRID_ID:
     children:
     - HEADER-01Nvr6TbT8i3wBQBr6epp
-    - ROW-r0LygVrX1g28lvfGum4z3
+    - ROW-lz9rgX2qtb4-oe2NnRgWM
+    - ROW-k6QLLH5gXHDWeupc_OYOx
     - HEADER-05JRcJxkiMriwbaY6a_ZQ
     - ROW-kSmOtBs0drZVv6dvSYoAv
     - HEADER-TbHgS1nnj8IGghmDX99Tp
     - ROW-1xb1bnRM_mc1Jrn_uERlo
     - HEADER-JiRMaVE3LmqPFLiD9SSlW
     - ROW-l5Gbq5IKf9QATDlZ8f1lG
+    - HEADER-phguLYadWvJEhYdnJLUUD
+    - ROW-DEiHAxc3yrK7W_sLF7Z9x
     id: GRID_ID
     parents:
     - ROOT_ID
@@ -164,6 +223,17 @@ position:
     - ROOT_ID
     - GRID_ID
     type: HEADER
+  HEADER-phguLYadWvJEhYdnJLUUD:
+    children: []
+    id: HEADER-phguLYadWvJEhYdnJLUUD
+    meta:
+      background: BACKGROUND_TRANSPARENT
+      headerSize: MEDIUM_HEADER
+      text: Miscellaneous
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: HEADER
   HEADER_ID:
     id: HEADER_ID
     meta:
@@ -181,6 +251,27 @@ position:
     id: ROW-1xb1bnRM_mc1Jrn_uERlo
     meta:
       '0': ROOT_ID
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-DEiHAxc3yrK7W_sLF7Z9x:
+    children:
+    - CHART-BFh5VYvDoZQfbqt4OUNID
+    id: ROW-DEiHAxc3yrK7W_sLF7Z9x
+    meta:
+      background: BACKGROUND_TRANSPARENT
+    parents:
+    - ROOT_ID
+    - GRID_ID
+    type: ROW
+  ROW-k6QLLH5gXHDWeupc_OYOx:
+    children:
+    - CHART-LOsDqcTKrLrk0tzUkV9B3
+    - CHART-yVI9j7lFKHa3uuxNbQmyW
+    id: ROW-k6QLLH5gXHDWeupc_OYOx
+    meta:
       background: BACKGROUND_TRANSPARENT
     parents:
     - ROOT_ID
@@ -208,10 +299,11 @@ position:
     - ROOT_ID
     - GRID_ID
     type: ROW
-  ROW-r0LygVrX1g28lvfGum4z3:
+  ROW-lz9rgX2qtb4-oe2NnRgWM:
     children:
     - CHART-oXYvGKeQEbZ3A8DPGF_Dd
-    id: ROW-r0LygVrX1g28lvfGum4z3
+    - CHART-psQeIXy_WijjbBa6TJ_gq
+    id: ROW-lz9rgX2qtb4-oe2NnRgWM
     meta:
       background: BACKGROUND_TRANSPARENT
     parents:
@@ -220,17 +312,36 @@ position:
     type: ROW
 metadata:
   chart_configuration:
-    '3':
-      id: 3
+    '1':
+      id: 1
       crossFilters:
         scope: global
         chartsInScope:
-        - 1
         - 2
+        - 3
         - 4
         - 5
         - 6
         - 7
+        - 8
+        - 9
+        - 10
+        - 11
+    '2':
+      id: 2
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+        - 11
     '4':
       id: 4
       crossFilters:
@@ -242,17 +353,10 @@ metadata:
         - 5
         - 6
         - 7
-    '5':
-      id: 5
-      crossFilters:
-        scope: global
-        chartsInScope:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 6
-        - 7
+        - 8
+        - 9
+        - 10
+        - 11
     '6':
       id: 6
       crossFilters:
@@ -264,6 +368,10 @@ metadata:
         - 4
         - 5
         - 7
+        - 8
+        - 9
+        - 10
+        - 11
     '7':
       id: 7
       crossFilters:
@@ -275,6 +383,55 @@ metadata:
         - 4
         - 5
         - 6
+        - 8
+        - 9
+        - 10
+        - 11
+    '9':
+      id: 9
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 10
+        - 11
+    '10':
+      id: 10
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 11
+    '11':
+      id: 11
+      crossFilters:
+        scope: global
+        chartsInScope:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
   global_chart_configuration:
     scope:
       rootPath:
@@ -288,11 +445,129 @@ metadata:
     - 5
     - 6
     - 7
+    - 8
+    - 9
+    - 10
+    - 11
   map_label_colors:
-    Airborne: '#1FA8C9'
-    Ground: '#454E7C'
+    count: '#1FA8C9'
     Landings: '#1FA8C9'
     Takeoffs: '#454E7C'
+    Large (75000 to 300000 lbs): '#1FA8C9'
+    Heavy (> 300000 lbs): '#454E7C'
+    "Surface Vehicle \u2013 Service Vehicle": '#5AC189'
+    Light (< 15500 lbs): '#FF7F44'
+    Reserved: '#666666'
+    Small (15500 to 75000 lbs): '#E04355'
+    Rotorcraft: '#FCC700'
+    High Vortex Large (aircraft such as B-757): '#A868B7'
+    Lighter-than-air: '#A38F79'
+    "Surface Vehicle \u2013 Emergency Vehicle": '#3CCCCB'
+    Unmanned Aerial Vehicle: '#A1A6BD'
+    Line Obstacle: '#8FD3E4'
+    Ultralight / hang-glider / paraglider: '#ACE1C4'
+    Airborne: '#1FA8C9'
+    Ground: '#454E7C'
+    United States: '#1FA8C9'
+    United Kingdom: '#454E7C'
+    Canada: '#5AC189'
+    Germany: '#666666'
+    Ireland: '#E04355'
+    Turkey: '#FF7F44'
+    Australia: '#FCC700'
+    China: '#A868B7'
+    India: '#3CCCCB'
+    France: '#8FD3E4'
+    Spain: '#A1A6BD'
+    Japan: '#A38F79'
+    Malta: '#ACE1C4'
+    United Arab Emirates: '#FEC0A1'
+    Austria: '#B2B2B2'
+    Kingdom of the Netherlands: '#FDE380'
+    Brazil: '#EFA1AA'
+    Poland: '#D3B3DA'
+    Switzerland: '#D1C6BC'
+    Republic of Korea: '#9EE5E5'
+    Qatar: '#454E7C'
+    Sweden: '#5AC189'
+    Portugal: '#E04355'
+    Russian Federation: '#666666'
+    Thailand: '#A868B7'
+    Mexico: '#FF7F44'
+    Malaysia: '#FCC700'
+    Singapore: '#3CCCCB'
+    Taiwan: '#A38F79'
+    Indonesia: '#8FD3E4'
+    New Zealand: '#A1A6BD'
+    Norway: '#B2B2B2'
+    Finland: '#FEC0A1'
+    Philippines: '#ACE1C4'
+    Hungary: '#EFA1AA'
+    Greece: '#FDE380'
+    Belgium: '#D3B3DA'
+    Israel: '#9EE5E5'
+    Egypt: '#D1C6BC'
+    Denmark: '#D1C6BC'
+    Czech Republic: '#454E7C'
+    Chile: '#5AC189'
+    Latvia: '#666666'
+    Italy: '#E04355'
+    Saudi Arabia: '#FF7F44'
+    Luxembourg: '#FCC700'
+    Bulgaria: '#A868B7'
+    Morocco: '#3CCCCB'
+    Lithuania: '#A38F79'
+    Romania: '#A1A6BD'
+    Iceland: '#8FD3E4'
+    Viet Nam: '#ACE1C4'
+    South Africa: '#B2B2B2'
+    Ethiopia: '#FEC0A1'
+    Panama: '#FDE380'
+    Argentina: '#EFA1AA'
+    Kuwait: '#D3B3DA'
+    Colombia: '#9EE5E5'
+    Croatia: '#9EE5E5'
+    Serbia: '#D1C6BC'
+    Estonia: '#5AC189'
+    San Marino: '#454E7C'
+    Algeria: '#FF7F44'
+    Slovakia: '#E04355'
+    Bahrain: '#666666'
+    Jordan: '#FCC700'
+    Tunisia: '#A868B7'
+    Bangladesh: '#3CCCCB'
+    Oman: '#A38F79'
+    Ukraine: '#8FD3E4'
+    Uzbekistan: '#A1A6BD'
+    Sri Lanka: '#ACE1C4'
+    Slovenia: '#FEC0A1'
+    Pakistan: '#B2B2B2'
+    Islamic Republic of Iran: '#FDE380'
+    Azerbaijan: '#EFA1AA'
+    Libyan Arab Jamahiriya: '#D3B3DA'
+    Guatemala: '#D1C6BC'
+    Trinidad and Tobago: '#D3B3DA'
+    Nepal: '#9EE5E5'
+    Lebanon: '#454E7C'
+    Republic of Moldova: '#5AC189'
+    Kenya: '#FF7F44'
+    Brunei Darussalam: '#666666'
+    Belarus: '#E04355'
+    Cyprus: '#A868B7'
+    Georgia: '#FCC700'
+    Cambodia: '#A1A6BD'
+    Dominican Republic: '#A38F79'
+    Myanmar: '#3CCCCB'
+    Fiji: '#8FD3E4'
+    Kazakhstan: '#ACE1C4'
+    Senegal: '#FEC0A1'
+    Bhutan: '#B2B2B2'
+    Monaco: '#FDE380'
+    Bahamas: '#EFA1AA'
+    Iraq: '#FDE380'
+    Mauritius: '#D3B3DA'
+    Bolivia: '#9EE5E5'
+    Venezuela: '#D1C6BC'
   color_scheme: ''
   refresh_frequency: 0
   color_scheme_domain: []
@@ -331,6 +606,10 @@ metadata:
     - 5
     - 6
     - 7
+    - 8
+    - 9
+    - 10
+    - 11
     tabsInScope: []
   - id: NATIVE_FILTER-C5A9FPYmqCaaxqvREZ-wJ
     controlValues:
@@ -351,16 +630,21 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
+      - 1
+      - 8
+      - 9
+      - 7
       - 3
       - 5
       - 6
-      - 7
-      - 1
+      - 10
+      - 11
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
+    - 2
     - 4
-    - 5
+    - 11
     tabsInScope: []
   - id: NATIVE_FILTER_DIVIDER-mV-eZ_x4Z3WPah6FUxvGz
     type: DIVIDER
@@ -394,15 +678,21 @@ metadata:
       rootPath:
       - ROOT_ID
       excluded:
+      - 1
+      - 8
+      - 9
       - 4
       - 2
+      - 7
       - 3
       - 6
-      - 7
-      - 1
+      - 10
+      - 11
     type: NATIVE_FILTER
     description: ''
     chartsInScope:
-    - 2
+    - 5
+    - 11
     tabsInScope: []
+  default_filters: '{}'
 version: 1.0.0

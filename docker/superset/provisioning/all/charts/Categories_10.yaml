@@ -1,0 +1,58 @@
+slice_name: Categories
+description: null
+certified_by: null
+certification_details: null
+viz_type: pie
+params:
+  datasource: 4__table
+  viz_type: pie
+  groupby:
+  - category
+  metric: count
+  adhoc_filters:
+  - expressionType: SIMPLE
+    subject: time
+    operator: TEMPORAL_RANGE
+    comparator: No filter
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_gwsrlsrvtru_b1yzyt05ssk
+  - expressionType: SIMPLE
+    subject: category
+    operator: '>'
+    operatorId: GREATER_THAN
+    comparator: '1'
+    clause: WHERE
+    sqlExpression: null
+    isExtra: false
+    isNew: false
+    datasourceWarning: false
+    filterOptionName: filter_ixhu19cw0il_sbeupscjal
+  row_limit: 100
+  sort_by_metric: true
+  color_scheme: supersetColors
+  show_labels_threshold: 5
+  show_legend: true
+  legendType: scroll
+  legendOrientation: top
+  label_type: key
+  number_format: SMART_NUMBER
+  date_format: smart_date
+  show_labels: true
+  labels_outside: true
+  label_line: true
+  outerRadius: 70
+  donut: true
+  innerRadius: 45
+  extra_form_data: {}
+  dashboards: []
+query_context: '{"datasource":{"id":4,"type":"table"},"force":false,"queries":[{"filters":[{"col":"time","op":"TEMPORAL_RANGE","val":"No
+  filter"},{"col":"category","op":">","val":"1"}],"extras":{"having":"","where":""},"applied_time_extras":{},"columns":["category"],"metrics":["count"],"orderby":[["count",false]],"annotation_layers":[],"row_limit":100,"series_limit":0,"order_desc":true,"url_params":{},"custom_params":{},"custom_form_data":{}}],"form_data":{"datasource":"4__table","viz_type":"pie","groupby":["category"],"metric":"count","adhoc_filters":[{"expressionType":"SIMPLE","subject":"time","operator":"TEMPORAL_RANGE","comparator":"No
+  filter","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_gwsrlsrvtru_b1yzyt05ssk"},{"expressionType":"SIMPLE","subject":"category","operator":">","operatorId":"GREATER_THAN","comparator":"1","clause":"WHERE","sqlExpression":null,"isExtra":false,"isNew":false,"datasourceWarning":false,"filterOptionName":"filter_ixhu19cw0il_sbeupscjal"}],"row_limit":100,"sort_by_metric":true,"color_scheme":"supersetColors","show_labels_threshold":5,"show_legend":true,"legendType":"scroll","legendOrientation":"top","label_type":"key","number_format":"SMART_NUMBER","date_format":"smart_date","show_labels":true,"labels_outside":true,"label_line":true,"outerRadius":70,"donut":true,"innerRadius":45,"extra_form_data":{},"dashboards":[],"force":false,"result_format":"json","result_type":"full"},"result_format":"json","result_type":"full"}'
+cache_timeout: null
+uuid: 4196cd3b-5720-45fd-a34e-1544fd6e0e6e
+version: 1.0.0
+dataset_uuid: c012fb97-e8da-4fd8-8c4e-4a30840b020b
