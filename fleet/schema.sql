@@ -279,13 +279,3 @@ select *,
        dictGet('aircraft_dict', 'owner', icao24) as owner,
        dictGet('aircraft_dict', 'registration', icao24) as registration
 from clean_states;
-
-
-create or replace view clean_flights_aircraft as
-select *,
-       dictGet('aircraft_dict', 'engines', icao24) as engines,
-       dictGet('aircraft_dict', 'manufacturerName', icao24) as manufacturerName,
-       dictGet('aircraft_dict', 'model', icao24) as model,
-       dictGet('aircraft_dict', 'owner', icao24) as owner,
-       dictGet('aircraft_dict', 'registration', icao24) as registration
-from clean_flights;
