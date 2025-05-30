@@ -1,2 +1,2 @@
-clickhouse-connect==0.8.17
-psycopg2-binary==2.9.10
+clickhouse-connect
+psycopg2-binary
