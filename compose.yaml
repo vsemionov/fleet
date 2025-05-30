@@ -45,7 +45,7 @@ x-airflow-common:
 x-spark-common:
   &spark-common
   <<: *common
-  image: spark:3.5.5-java17
+  image: spark:3.5.6-java17
   healthcheck:
     &spark-common-healthcheck
     <<: *common-healthcheck
@@ -98,7 +98,7 @@ services:
 
   redis:
     <<: *common
-    image: redis:8.0.1
+    image: redis:8.0.2
     volumes:
       - redis_data:/data
     ports:
