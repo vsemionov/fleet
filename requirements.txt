@@ -1,4 +1,4 @@
-click
-pyspark
-requests
-tqdm
+click==8.2.1
+pyspark==3.5.6
+requests==2.32.3
+tqdm==4.67.1
