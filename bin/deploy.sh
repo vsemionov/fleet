@@ -36,8 +36,8 @@ docker compose exec airflow bash -c "airflow connections get spark || airflow co
 docker compose exec airflow bash -c "airflow connections get opensky || airflow connections add --conn-type generic --conn-login "\$OPENSKY_CLIENT_ID" --conn-password "\$OPENSKY_CLIENT_SECRET" opensky"
 
 echo "Enabling Airflow DAGs"
-#docker compose exec airflow bash -c "airflow dags unpause process_states"
 docker compose exec airflow bash -c "airflow dags unpause collect_states"
+docker compose exec airflow bash -c "airflow dags unpause process_states"
 
 echo "Importing Superset dashboards"
 docker compose exec superset bash /opt/fleet/provision.sh
