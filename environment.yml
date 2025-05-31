@@ -90,7 +90,12 @@ dependencies:
 
 #  - dython
 #  - sweetviz
+
   - folium
+  - pyproj
+  - cartopy
+  - geopandas
+#  - basemap
 
   - beautifulsoup4
   - lxml
