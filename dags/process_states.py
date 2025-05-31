@@ -2,21 +2,21 @@ from datetime import timedelta
 from pathlib import Path
 
 from airflow.sdk import dag, task
+from airflow.timetables.interval import CronDataIntervalTimetable
 from airflow.hooks.base import BaseHook
 from pyspark.sql import SparkSession
 
-from daglib.assets import states_asset
 from daglib.spark import configure_clickhouse_catalog
 from daglib import config
 
 
 @dag(
     description='Process states',
-    schedule=states_asset,
+    schedule=CronDataIntervalTimetable('0 0 * * *', timezone='UTC'),
     default_args={
-        'retries': 5,
-        'retry_delay': 60.0,
-        'execution_timeout': timedelta(seconds=60),
+        'retries': 3,
+        'retry_delay': timedelta(minutes=30),
+        'execution_timeout': timedelta(minutes=15),
     },
 )
 def process_states():
@@ -28,7 +28,7 @@ def process_states():
         with SparkSession.builder \
                 .appName(Path(__file__).stem) \
                 .master(f'spark://{spark_conn.host}:{spark_conn.port or config.SPARK_DEFAULT_PORT}') \
-                .config('spark.jars.packages', config.SPARK_CLICKHOUSE_PACKAGES) \
+                .config('spark.jars', f'{config.CLICKHOUSE_SPARK_JAR},{config.CLICKHOUSE_JDBC_JAR}') \
                 .getOrCreate() as spark:
             configure_clickhouse_catalog(spark, config.CLICKHOUSE_CONN_ID, clickhouse_conn)
 
