@@ -37,7 +37,7 @@ docker compose exec airflow bash -c "airflow connections get opensky || airflow 
 
 echo "Enabling Airflow DAGs"
 docker compose exec airflow bash -c "airflow dags unpause collect_states"
-docker compose exec airflow bash -c "airflow dags unpause process_states"
+#docker compose exec airflow bash -c "airflow dags unpause process_states"
 
 echo "Importing Superset dashboards"
 docker compose exec superset bash /opt/fleet/provision.sh
