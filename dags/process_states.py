@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, timezone
 from pathlib import Path
 
 from airflow.sdk import dag, task
@@ -6,7 +6,6 @@ from airflow.timetables.interval import CronDataIntervalTimetable
 from airflow.hooks.base import BaseHook
 from pyspark.sql import SparkSession
 
-from daglib.spark import configure_clickhouse_catalog
 from daglib import config
 
 
@@ -21,18 +20,41 @@ from daglib import config
 )
 def process_states():
     @task()
-    def process():
+    def process(**context):
         clickhouse_conn = BaseHook.get_connection(config.CLICKHOUSE_CONN_ID)
         spark_conn = BaseHook.get_connection(config.SPARK_CONN_ID)
 
         with SparkSession.builder \
                 .appName(Path(__file__).stem) \
                 .master(f'spark://{spark_conn.host}:{spark_conn.port or config.SPARK_DEFAULT_PORT}') \
-                .config('spark.jars', f'{config.CLICKHOUSE_SPARK_JAR},{config.CLICKHOUSE_JDBC_JAR}') \
+                .config('spark.jars', f'{config.CLICKHOUSE_JDBC_JAR}') \
                 .getOrCreate() as spark:
-            configure_clickhouse_catalog(spark, config.CLICKHOUSE_CONN_ID, clickhouse_conn)
 
-            df = spark.sql(f'select count(*) from {config.CLICKHOUSE_CONN_ID}.{clickhouse_conn.schema}.clean_states')
+            data_interval_start = context['data_interval_start'].astimezone(timezone.utc).replace(tzinfo=None)
+            data_interval_end = context['data_interval_end'].astimezone(timezone.utc).replace(tzinfo=None)
+
+            df = spark.read \
+                .format('jdbc') \
+                .option('driver', 'com.clickhouse.jdbc.ClickHouseDriver') \
+                .option('url', f'jdbc:ch://{clickhouse_conn.host}'
+                    f':{clickhouse_conn.port or config.CLICKHOUSE_DEFAULT_HTTP_PORT}'
+                    f'/{clickhouse_conn.schema}') \
+                .option('user', clickhouse_conn.login) \
+                .option('password', clickhouse_conn.password) \
+                .option('dbtable', f'('
+                    f"select time_position, longitude, latitude "
+                    f"from {config.CLEAN_STATES_TABLE} "
+                    f"where time_position >= '{data_interval_start.strftime('%Y-%m-%d %H:%M:%S')}' and "
+                    f"   time_position < '{data_interval_end.strftime('%Y-%m-%d %H:%M:%S')}'"
+                    f")") \
+                .option('numPartitions', config.SPARK_NUM_PARTITIONS) \
+                .option('partitionColumn', 'time_position') \
+                .option('lowerBound', data_interval_start) \
+                .option('upperBound', data_interval_end) \
+                .load()
+            df.createTempView(config.CLEAN_STATES_TABLE)
+
+            df = spark.sql(f'select count(*) from {config.CLEAN_STATES_TABLE}')
             df.show()
 
     process()

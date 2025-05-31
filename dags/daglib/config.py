@@ -17,6 +17,7 @@ CLICKHOUSE_SPARK_JAR = os.environ['CLICKHOUSE_SPARK_JAR']
 
 AUTH_TOKENS_TABLE = 'auth_tokens'
 STATES_TABLE = 'states'
+CLEAN_STATES_TABLE = 'clean_states'
 
 OPENSKY_AUTH_URL = 'https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token'
 OPENSKY_STATES_URL = 'https://opensky-network.org/api/states/all'
@@ -24,3 +25,5 @@ OPENSKY_STATES_PARAMS = {'extended': 1}
 OPENSKY_TIMEOUT = 30
 OPENSKY_MAX_TIME_DIFF = 300
 OPENSKY_MIN_AUTH_TTL = 300
+
+SPARK_NUM_PARTITIONS = 8
