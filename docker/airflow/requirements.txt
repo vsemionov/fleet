@@ -1,7 +1,12 @@
 airflow-clickhouse-plugin
 apache-airflow-providers-apache-spark
 apache-airflow-providers-sqlite
+cartopy
 clickhouse-driver
+colorcet
+datashader
 httpx
+matplotlib
+pandas
 pyspark==3.5.6
 retryhttp
