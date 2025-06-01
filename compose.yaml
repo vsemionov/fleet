@@ -40,7 +40,7 @@ x-airflow-common:
 x-spark-common:
   &spark-common
   <<: *common
-  image: spark:3.5.6-java17
+  build: docker/spark
   healthcheck:
     &spark-common-healthcheck
     <<: *common-healthcheck

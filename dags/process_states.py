@@ -1,3 +1,5 @@
+import sys
+import os
 from datetime import timedelta, timezone
 from pathlib import Path
 
@@ -23,6 +25,8 @@ def process_states():
     def process(**context):
         clickhouse_conn = BaseHook.get_connection(config.CLICKHOUSE_CONN_ID)
         spark_conn = BaseHook.get_connection(config.SPARK_CONN_ID)
+
+        os.environ['PYSPARK_PYTHON'] = f'python{sys.version_info.major}.{sys.version_info.minor}'
 
         with SparkSession.builder \
                 .appName(Path(__file__).stem) \
