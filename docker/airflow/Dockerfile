@@ -1,4 +1,6 @@
-FROM apache/airflow:3.0.1
+ARG PYTHON_VERSION=3.12
+
+FROM apache/airflow:3.0.1-python${PYTHON_VERSION}
 
 ARG JAVA_VERSION=17
 ARG SPARK_VERSION=3.5
