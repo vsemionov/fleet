@@ -97,6 +97,8 @@ dependencies:
   - cartopy
   - geopandas
   - datashader
+  - bokeh
+  - holoviews
 
   - beautifulsoup4
   - lxml
