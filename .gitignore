@@ -2,11 +2,11 @@
 /.idea
 /.vscode
 
-/.env
+/data
+/jars
+/tmp
 
-*.jar
-*.csv
-*.parquet
+/.env
 
 
 # Byte-compiled / optimized / DLL files
