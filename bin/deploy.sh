@@ -35,6 +35,9 @@ docker compose exec airflow bash -c "airflow connections get clickhouse || airfl
 docker compose exec airflow bash -c "airflow connections get spark || airflow connections add --conn-type spark --conn-host spark spark"
 docker compose exec airflow bash -c "airflow connections get opensky || airflow connections add --conn-type generic --conn-login "\$OPENSKY_CLIENT_ID" --conn-password "\$OPENSKY_CLIENT_SECRET" opensky"
 
+echo "Patching filesystem permissions"
+mkdir -p data/plots && sudo chown :root data/plots && chmod g+w data/plots
+
 echo "Enabling Airflow DAGs"
 docker compose exec airflow bash -c "airflow dags unpause collect_states"
 docker compose exec airflow bash -c "airflow dags unpause process_states"
