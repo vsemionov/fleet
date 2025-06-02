@@ -98,11 +98,11 @@ def process_states():
 
     def to_array(df: sql.DataFrame) -> xr.DataArray:
         df = df.toPandas()
-        xy = df[['x', 'y']].to_numpy()
+        yx = df[['y', 'x']].to_numpy()
         v = df['v'].to_numpy()
 
         agg = np.zeros(config.PLOT_AGG_RESOLUTION[::-1], dtype=np.uint64)
-        agg[xy[:, 0], xy[:, 1]] = v
+        agg[yx[:, 0], yx[:, 1]] = v
         return xr.DataArray(agg)
 
     def get_output_path() -> Path:
