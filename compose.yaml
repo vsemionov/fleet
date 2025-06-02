@@ -30,6 +30,7 @@ x-airflow-common:
     CONNECTION_CHECK_SLEEP_TIME: 5
   volumes:
     - ./dags:/opt/airflow/dags
+    - ./data:/opt/fleet/data
   healthcheck:
     &airflow-common-healthcheck
     start_period: 60s
