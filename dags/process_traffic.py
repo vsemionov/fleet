@@ -31,7 +31,7 @@ logger = logging.getLogger('airflow.task')
 
 
 @dag(
-    description='Process states',
+    description='Process traffic',
     schedule=CronDataIntervalTimetable('0 0 * * *', timezone='UTC'),
     default_args={
         'retries': 3,
