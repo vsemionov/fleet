@@ -85,7 +85,8 @@ def process_airports():
         projected = projection.transform_points(geodetic, landings['longitude'], landings['latitude'])
         landings['x'], landings['y'] = projected.T[:2]
 
-        dbscan = DBSCAN(eps=5_000, min_samples=5).fit(landings[['x', 'y']])
+        dbscan = DBSCAN(eps=5_000, min_samples=5)
+        dbscan.fit(landings[['x', 'y']])
         landings['airport'] = dbscan.labels_
 
         landings = landings[landings['airport'] >= 0]
@@ -109,7 +110,7 @@ def process_airports():
         ground_level = np.maximum(ground_level, 0)
         minima['agl'] = minima['altitude'] - ground_level
 
-        minima = minima[minima['agl'] < 250]
+        minima = minima[minima['agl'] < 500]
 
         geodesic = Geodesic()
         endpoints = airports[['longitude', 'latitude']].to_numpy()
@@ -123,7 +124,7 @@ def process_airports():
         minima['airport'] = airports.index[airport_idx]
         minima['airport_dist'] = dists[range(dists.shape[0]), airport_idx]
 
-        minima = minima[minima['airport_dist'] < 10_000]
+        minima = minima[minima['airport_dist'] < 5_000]
 
         goarounds = minima.groupby('airport').size()
         airports['goarounds'] = 0
