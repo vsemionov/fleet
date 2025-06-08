@@ -239,8 +239,8 @@ def process_airports():
             50,
             2,
             14,
-            'Airport Safety - Global',
-            'global'
+            'Airport Safety - Europe',
+            'europe'
         )
 
         logger.info('Plotting airport safety - United States')
@@ -251,8 +251,8 @@ def process_airports():
             50,
             4,
             20,
-            'Airport Safety - Global',
-            'global'
+            'Airport Safety - United States',
+            'united_states'
         )
 
 
