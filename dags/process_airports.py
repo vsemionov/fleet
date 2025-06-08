@@ -98,7 +98,7 @@ def process_airports():
         wgs84 = geodetic.transform_points(projection, airports['x'], airports['y'])
         airports['longitude'], airports['latitude'] = wgs84.T[:2]
 
-        return landings
+        return airports
 
 
     def infer_goarounds(minima: pd.DataFrame, airports: pd.DataFrame, elevation: xr.DataArray) -> pd.DataFrame:
@@ -117,10 +117,10 @@ def process_airports():
             lambda row: geodesic.inverse(row.to_numpy(), endpoints)[:, 0],
             axis=1,
         )
-        dists = np.stack(dists.to_numpy()).astype(np.float32)
+        dists = np.stack(dists).astype(np.float32)
 
         airport_idx = dists.argmin(axis=1)
-        minima['airport'] = airports.index.to_numpy()[airport_idx]
+        minima['airport'] = airports.index[airport_idx]
         minima['airport_dist'] = dists[range(dists.shape[0]), airport_idx]
 
         minima = minima[minima['airport_dist'] < 10_000]
