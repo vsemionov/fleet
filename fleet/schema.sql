@@ -184,6 +184,29 @@ select * from (
 where prev_time_position is not null;
 
 
+create or replace view get_altitude_minima as
+select * from (
+    select *,
+           lagInFrame(time_position::Nullable(DateTime)) over icao_time_window as prev_time_position,
+           leadInFrame(time_position::Nullable(DateTime)) over icao_time_window as next_time_position,
+           lagInFrame(on_ground::Nullable(Bool)) over icao_time_window as prev_on_ground,
+           leadInFrame(on_ground::Nullable(Bool)) over icao_time_window as next_on_ground,
+           lagInFrame(baro_altitude::Nullable(Float32)) over icao_time_window as prev_baro_altitude,
+           leadInFrame(baro_altitude::Nullable(Float32)) over icao_time_window as next_baro_altitude
+    from clean_states
+    where coalesce(time_position >= {start_time:Nullable(DateTime)}, true) and
+          coalesce(time_position < {end_time:Nullable(DateTime)}, true)
+    window icao_time_window as (partition by icao24 order by time_position rows between unbounded preceding and unbounded following)
+)
+where on_ground = false and
+      prev_on_ground = false and
+      next_on_ground = false and
+      baro_altitude < prev_baro_altitude and
+      baro_altitude < next_baro_altitude and
+      time_position - prev_time_position < 300 and
+      next_time_position - time_position < 300;
+
+
 create or replace table aircraft
 (
     icao24 String,
