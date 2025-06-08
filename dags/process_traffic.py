@@ -39,7 +39,7 @@ logger = logging.getLogger('airflow.task')
         'execution_timeout': timedelta(minutes=15),
     },
 )
-def process_states():
+def process_traffic():
     def spark_session() -> SparkSession:
         spark_conn = BaseHook.get_connection(config.SPARK_CONN_ID)
 
@@ -251,7 +251,7 @@ def process_states():
     process()
 
 
-dag_obj = process_states()
+dag_obj = process_traffic()
 
 
 if __name__ == '__main__':
