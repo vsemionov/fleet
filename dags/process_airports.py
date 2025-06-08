@@ -226,7 +226,7 @@ def process_airports():
             None,
             50,
             1,
-            20,
+            40,
             'Airport Safety - Global',
             'global'
         )
@@ -238,7 +238,7 @@ def process_airports():
             (-13, 50, 33, 72),
             50,
             2,
-            14,
+            30,
             'Airport Safety - Europe',
             'europe'
         )
@@ -250,7 +250,7 @@ def process_airports():
             (-127, -65, 24, 51),
             50,
             4,
-            20,
+            40,
             'Airport Safety - United States',
             'united_states'
         )
