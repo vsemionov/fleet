@@ -122,10 +122,10 @@ def process_states():
 
 
     def get_output_path(slug: str) -> Path:
-        output_dir = Path(config.PLOT_OUTPUT_DIR)
-        output_dir.mkdir(parents=True, exist_ok=True)
         plot_group = get_current_context()['data_interval_start'].astimezone(timezone.utc).strftime('%Y-%m-%d')
-        return output_dir / f'traffic-{plot_group}-{slug}.png'
+        output_dir = Path(config.PLOT_OUTPUT_DIR) / 'traffic' / plot_group
+        output_dir.mkdir(parents=True, exist_ok=True)
+        return output_dir / f'{slug}.png'
 
 
     def rasterize(
