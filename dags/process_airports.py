@@ -106,6 +106,7 @@ def process_airports():
             lat=xr.DataArray(minima['latitude']),
             lon=xr.DataArray(minima['longitude']),
         )
+        ground_level = np.maximum(ground_level, 0)
         minima['agl'] = minima['altitude'] - ground_level
 
         minima = minima[minima['agl'] < 250]
