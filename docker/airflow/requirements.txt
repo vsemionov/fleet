@@ -9,6 +9,8 @@ httpx
 matplotlib
 numpy
 pandas
+pygmt
 pyspark==3.5.6
 retryhttp
+scikit-learn
 xarray

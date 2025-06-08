@@ -40,7 +40,8 @@ mkdir -p data/plots && sudo chown :root data/plots && chmod g+w data/plots
 
 echo "Enabling Airflow DAGs"
 docker compose exec airflow bash -c "airflow dags unpause collect_states"
-docker compose exec airflow bash -c "airflow dags unpause process_states"
+docker compose exec airflow bash -c "airflow dags unpause process_airports"
+docker compose exec airflow bash -c "airflow dags unpause process_traffic"
 
 echo "Importing Superset dashboards"
 docker compose exec superset bash /opt/fleet/provision.sh

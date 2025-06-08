@@ -11,9 +11,12 @@ ARG CLICKHOUSE_SPARK_VERSION=0.8.1
 
 USER root
 
+COPY Aptfile build.sh /opt/fleet/
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         openjdk-${JAVA_VERSION}-jre-headless \
+    && apt-get install -y $(cat /opt/fleet/Aptfile) \
+    && /opt/fleet/build.sh \
     && apt-get autoremove -yqq --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
