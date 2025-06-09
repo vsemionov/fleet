@@ -113,31 +113,12 @@ def process_airports():
         minima = minima[minima['agl'] < 500]
 
         geodesic = Geodesic()
-        lons, lats, _ = geodesic.geod.fwd(
-            np.tile(minima['longitude'], (4, 1)).T,
-            np.tile(minima['latitude'], (4, 1)).T,
-            az=np.tile(np.array([0, 90, 180, 270]), (len(minima), 1)),
-            dist=np.tile([10_000] * 4, (len(minima), 1)),
-        )
-        lons, lats = lons.T, lats.T
-        n, e, s, w = lats[0], lons[1], lats[2], lons[3]
-        n = np.where(np.abs(lons[0] - minima['longitude']) < 90, n, 90)
-        s = np.where(np.abs(lons[2] - minima['longitude']) < 90, s, -90)
-
-        dists = np.full((len(minima), len(airports)), np.inf)
         endpoints = airports[['longitude', 'latitude']].to_numpy()
-        endp_lons, endp_lats = endpoints[:, 0], endpoints[:, 1]
-
-        for i, row in enumerate(minima.itertuples(index=False)):
-            min_lon, max_lon, min_lat, max_lat = w[i], e[i], s[i], n[i]
-            if min_lon < max_lon:
-                idxs = (endp_lons >= min_lon) & (endp_lons <= max_lon)
-            else:
-                idxs = ((endp_lons >= min_lon) | (endp_lons <= max_lon))
-            idxs = idxs & (endp_lats >= min_lat) & (endp_lats <= max_lat)
-            epts = endpoints[idxs]
-            if epts.shape[0]:
-                dists[i, idxs] = geodesic.inverse(np.array([row.longitude, row.latitude]), epts)[:, 0]
+        dists = minima[['longitude', 'latitude']].apply(
+            lambda row: geodesic.inverse(row.to_numpy(), endpoints)[:, 0],
+            axis=1,
+        )
+        dists = np.stack(dists).astype(np.float32)
 
         airport_idx = dists.argmin(axis=1)
         minima['airport'] = airports.index[airport_idx]
