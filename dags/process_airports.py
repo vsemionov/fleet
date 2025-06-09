@@ -112,14 +112,12 @@ def process_airports():
 
         minima = minima[minima['agl'] < 500]
 
-        max_airport_dist = 5_000
-
         geodesic = Geodesic()
         lons, lats, _ = geodesic.geod.fwd(
             np.tile(minima['longitude'], (4, 1)).T,
             np.tile(minima['latitude'], (4, 1)).T,
             az=np.tile(np.array([0, 90, 180, 270]), (len(minima), 1)),
-            dist=np.tile([max_airport_dist] * 4, (len(minima), 1)),
+            dist=np.tile([10_000] * 4, (len(minima), 1)),
         )
         lons, lats = lons.T, lats.T
         n, e, s, w = lats[0], lons[1], lats[2], lons[3]
@@ -145,7 +143,7 @@ def process_airports():
         minima['airport'] = airports.index[airport_idx]
         minima['airport_dist'] = dists[range(dists.shape[0]), airport_idx]
 
-        minima = minima[minima['airport_dist'] < max_airport_dist]
+        minima = minima[minima['airport_dist'] < 5_000]
 
         goarounds = minima.groupby('airport').size()
         airports['goarounds'] = 0
