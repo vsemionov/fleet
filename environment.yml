@@ -42,6 +42,7 @@ dependencies:
   - python-duckdb
   - clickhouse-driver
 
+  - dask
   - pyspark=3.5
 
   - airflow
