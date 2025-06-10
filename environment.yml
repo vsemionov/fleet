@@ -3,7 +3,7 @@ name: fleet
 
 channels:
   - conda-forge
-  - defaults
+#  - defaults
 
 
 dependencies:
