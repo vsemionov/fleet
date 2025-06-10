@@ -1,9 +1,0 @@
-name: dask
-
-
-channels:
-  - conda-forge
-
-
-dependencies:
-  - cartopy
