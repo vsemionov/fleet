@@ -43,8 +43,8 @@ dependencies:
   - clickhouse-driver
 
   - dask
-  - modin-all
-  - swifter
+#  - modin-all
+#  - swifter
 
   - pyspark=3.5
 
