@@ -164,7 +164,7 @@ services:
 
   dask-worker:
     <<: *dask-common
-    command: dask worker --dashboard-address 80 tcp://dask:8786
+    command: dask worker --nworkers 2 --nthreads 2 --dashboard-address 80 tcp://dask:8786
     hostname: dask-worker
     healthcheck:
       <<: *dask-common-healthcheck
@@ -189,8 +189,8 @@ services:
     command: /opt/spark/sbin/start-worker.sh spark://spark:7077
     environment:
       SPARK_NO_DAEMONIZE: 1
-      SPARK_WORKER_MEMORY: 1G
-      SPARK_WORKER_CORES: 1
+      SPARK_WORKER_MEMORY: 4G
+      SPARK_WORKER_CORES: 4
     hostname: spark-worker
     healthcheck:
       <<: *spark-common-healthcheck
