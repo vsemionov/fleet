@@ -43,6 +43,9 @@ dependencies:
   - clickhouse-driver
 
   - dask
+  - modin
+  - swifter
+
   - pyspark=3.5
 
   - airflow
