@@ -35,8 +35,8 @@ logger = logging.getLogger('airflow.task')
     schedule=CronDataIntervalTimetable('0 0 * * *', timezone='UTC'),
     default_args={
         'retries': 3,
-        'retry_delay': timedelta(minutes=30),
-        'execution_timeout': timedelta(minutes=15),
+        'retry_delay': timedelta(minutes=15),
+        'execution_timeout': timedelta(minutes=5),
     },
 )
 def process_traffic():
