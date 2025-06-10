@@ -1,3 +1,4 @@
+import os
 import time
 from datetime import timedelta, timezone
 from pathlib import Path
@@ -11,6 +12,8 @@ from clickhouse_driver import Client
 import numpy as np
 import xarray as xr
 import pandas as pd
+import dask.dataframe as dd
+from dask.distributed import Cluster, LocalCluster
 from sklearn.cluster import DBSCAN
 import pygmt
 import cartopy as cp
@@ -36,6 +39,15 @@ logger = logging.getLogger('airflow.task')
     },
 )
 def process_airports():
+    def dask_cluster() -> Cluster:
+        cluster = LocalCluster()
+        try:
+            cluster.get_client()
+        except Exception:
+            cluster.close()
+            raise
+
+
     def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
         context = get_current_context()
         data_interval_start = context['data_interval_start'].astimezone(timezone.utc).replace(tzinfo=None)
@@ -114,10 +126,13 @@ def process_airports():
 
         geodesic = Geodesic()
         endpoints = airports[['longitude', 'latitude']].to_numpy()
-        dists = minima[['longitude', 'latitude']].apply(
+        data = dd.from_pandas(minima, npartitions=os.cpu_count())
+        dists = data[['longitude', 'latitude']].apply(
             lambda row: geodesic.inverse(row.to_numpy(), endpoints)[:, 0],
             axis=1,
+            meta=(None, object),
         )
+        dists = dists.compute()
         dists = np.stack(dists).astype(np.float32)
 
         airport_idx = dists.argmin(axis=1)
@@ -204,57 +219,58 @@ def process_airports():
 
     @task()
     def process():
-        t0 = time.time()
-        landings, minima = load_data()
-        logger.info(f'Loaded {len(landings)} landings and {len(minima)} minima in {time.time() - t0:.3f} s')
+        with dask_cluster():
+            t0 = time.time()
+            landings, minima = load_data()
+            logger.info(f'Loaded {len(landings)} landings and {len(minima)} minima in {time.time() - t0:.3f} s')
 
-        t0 = time.time()
-        elevation = load_elevation()
-        logger.info(f'Loaded {elevation.shape[1]}x{elevation.shape[0]} elevation map in {time.time() - t0:.3f} s')
+            t0 = time.time()
+            elevation = load_elevation()
+            logger.info(f'Loaded {elevation.shape[1]}x{elevation.shape[0]} elevation map in {time.time() - t0:.3f} s')
 
-        t0 = time.time()
-        airports = infer_airports(landings)
-        logger.info(f'Inferred {len(airports)} airports in {time.time() - t0:.3f} s')
+            t0 = time.time()
+            airports = infer_airports(landings)
+            logger.info(f'Inferred {len(airports)} airports in {time.time() - t0:.3f} s')
 
-        t0 = time.time()
-        airports = infer_goarounds(minima, airports, elevation)
-        logger.info(f'Inferred {airports.goarounds.sum()} go-arounds in {time.time() - t0:.3f} s')
+            t0 = time.time()
+            airports = infer_goarounds(minima, airports, elevation)
+            logger.info(f'Inferred {airports.goarounds.sum()} go-arounds in {time.time() - t0:.3f} s')
 
-        logger.info('Plotting airport safety - global')
-        plot_airports(
-            airports,
-            cp.crs.Robinson(),
-            None,
-            50,
-            1,
-            40,
-            'Airport Safety - Global',
-            'global'
-        )
+            logger.info('Plotting airport safety - global')
+            plot_airports(
+                airports,
+                cp.crs.Robinson(),
+                None,
+                50,
+                1,
+                40,
+                'Airport Safety - Global',
+                'global'
+            )
 
-        logger.info('Plotting airport safety - Europe')
-        plot_airports(
-            airports,
-            cp.crs.Mercator(),
-            (-13, 50, 33, 72),
-            50,
-            2,
-            30,
-            'Airport Safety - Europe',
-            'europe'
-        )
+            logger.info('Plotting airport safety - Europe')
+            plot_airports(
+                airports,
+                cp.crs.Mercator(),
+                (-13, 50, 33, 72),
+                50,
+                2,
+                30,
+                'Airport Safety - Europe',
+                'europe'
+            )
 
-        logger.info('Plotting airport safety - United States')
-        plot_airports(
-            airports,
-            cp.crs.Mercator(),
-            (-127, -65, 24, 51),
-            50,
-            4,
-            40,
-            'Airport Safety - United States',
-            'united_states'
-        )
+            logger.info('Plotting airport safety - United States')
+            plot_airports(
+                airports,
+                cp.crs.Mercator(),
+                (-127, -65, 24, 51),
+                50,
+                4,
+                40,
+                'Airport Safety - United States',
+                'united_states'
+            )
 
 
     process()

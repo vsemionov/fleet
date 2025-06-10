@@ -5,6 +5,7 @@ cartopy
 clickhouse-driver
 colorcet
 datashader
+dask[complete]
 httpx
 matplotlib
 numpy
