@@ -254,6 +254,18 @@ services:
     healthcheck:
       test: timeout 5 curl -f -sS http://localhost:8088/health >/dev/null || exit 1
 
+  jupyter:
+    <<: *common
+    build: docker/jupyter
+    volumes:
+      - ./notebooks:/opt/fleet/notebooks
+    ports:
+      - '127.0.0.1:8888:8888'
+    hostname: jupyter
+    healthcheck:
+      <<: *common-healthcheck
+      test: timeout 5 wget --no-verbose --tries=1 -O - http://localhost:8888/api/ >/dev/null || exit 1
+
 
 volumes:
   postgres_data:
