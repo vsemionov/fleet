@@ -1,6 +1,5 @@
 airflow-clickhouse-plugin
 apache-airflow-providers-apache-spark
-apache-airflow-providers-sqlite
 cartopy
 clickhouse-driver
 colorcet

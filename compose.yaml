@@ -38,6 +38,14 @@ x-airflow-common:
     interval: 60s
     retries: 5
 
+x-dask-common:
+  &dask-common
+  <<: *common
+  build: docker/dask
+  healthcheck:
+    &dask-common-healthcheck
+    <<: *common-healthcheck
+
 x-spark-common:
   &spark-common
   <<: *common
@@ -143,6 +151,26 @@ services:
       <<: *airflow-common-healthcheck
       test: timeout 10 airflow jobs check --job-type DagProcessorJob --local >/dev/null || exit 1
 
+  dask:
+    <<: *dask-common
+    command: dask scheduler
+    ports:
+      - '127.0.0.1:8786:8786'
+      - '127.0.0.1:8787:8787'
+    hostname: dask
+    healthcheck:
+      <<: *dask-common-healthcheck
+      test: timeout 5 wget --no-verbose --tries=1 -O - http://localhost:8787/health >/dev/null || exit 1
+
+  dask-worker:
+    <<: *dask-common
+    command: dask worker --dashboard-address 80 tcp://dask:8786
+    hostname: dask-worker
+    healthcheck:
+      <<: *dask-common-healthcheck
+      test: timeout 5 wget --no-verbose --tries=1 -O - http://localhost:80/health >/dev/null || exit 1
+    scale: 2
+
   spark:
     <<: *spark-common
     command: /opt/spark/sbin/start-master.sh
@@ -167,7 +195,7 @@ services:
     healthcheck:
       <<: *spark-common-healthcheck
       test: timeout 5 curl -f -sS http://localhost:8081/ >/dev/null || exit 1
-    scale: 4
+    scale: 2
 
   grafana:
     <<: *common

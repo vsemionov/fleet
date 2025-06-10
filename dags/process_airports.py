@@ -1,4 +1,3 @@
-import os
 import time
 from datetime import timedelta, timezone
 from pathlib import Path
@@ -8,13 +7,12 @@ import logging
 from airflow.sdk import dag, task, get_current_context
 from airflow.timetables.interval import CronDataIntervalTimetable
 from airflow.hooks.base import BaseHook
-from clickhouse_driver import Client
+from clickhouse_driver import Client as ClickHouseClient
+from dask.distributed import Client as DaskClient
 import numpy as np
 import xarray as xr
 import pandas as pd
 import dask.dataframe as dd
-from dask.distributed import LocalCluster
-from distributed.deploy import Cluster
 from sklearn.cluster import DBSCAN
 import pygmt
 import cartopy as cp
@@ -40,13 +38,9 @@ logger = logging.getLogger('airflow.task')
     },
 )
 def process_airports():
-    def dask_cluster() -> Cluster:
-        cluster = LocalCluster()
-        try:
-            cluster.get_client()
-        except Exception:
-            cluster.close()
-            raise
+    def get_dask_client() -> DaskClient:
+        dask_conn = BaseHook.get_connection(config.DASK_CONN_ID)
+        return DaskClient(f'{dask_conn.host}:{dask_conn.port or config.DASK_DEFAULT_PORT}')
 
 
     def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -56,7 +50,7 @@ def process_airports():
 
         clickhouse_conn = BaseHook.get_connection(config.CLICKHOUSE_CONN_ID)
 
-        client = Client(
+        client = ClickHouseClient(
             host=clickhouse_conn.host,
             port=(clickhouse_conn.port or config.CLICKHOUSE_DEFAULT_PORT),
             database=clickhouse_conn.schema,
@@ -115,7 +109,12 @@ def process_airports():
         return airports
 
 
-    def infer_goarounds(minima: pd.DataFrame, airports: pd.DataFrame, elevation: xr.DataArray) -> pd.DataFrame:
+    def infer_goarounds(
+            dask_client: DaskClient,
+            minima: pd.DataFrame,
+            airports: pd.DataFrame,
+            elevation: xr.DataArray
+    ) -> pd.DataFrame:
         ground_level = elevation.interp(
             lat=xr.DataArray(minima['latitude']),
             lon=xr.DataArray(minima['longitude']),
@@ -127,7 +126,7 @@ def process_airports():
 
         geodesic = Geodesic()
         endpoints = airports[['longitude', 'latitude']].to_numpy()
-        data = dd.from_pandas(minima, npartitions=os.cpu_count())
+        data = dd.from_pandas(minima, npartitions=sum(dask_client.nthreads().values()))
         dists = data[['longitude', 'latitude']].apply(
             lambda row: geodesic.inverse(row.to_numpy(), endpoints)[:, 0],
             axis=1,
@@ -220,7 +219,7 @@ def process_airports():
 
     @task()
     def process():
-        with dask_cluster():
+        with get_dask_client() as dask_client:
             t0 = time.time()
             landings, minima = load_data()
             logger.info(f'Loaded {len(landings)} landings and {len(minima)} minima in {time.time() - t0:.3f} s')
@@ -234,7 +233,7 @@ def process_airports():
             logger.info(f'Inferred {len(airports)} airports in {time.time() - t0:.3f} s')
 
             t0 = time.time()
-            airports = infer_goarounds(minima, airports, elevation)
+            airports = infer_goarounds(dask_client, minima, airports, elevation)
             logger.info(f'Inferred {airports.goarounds.sum()} go-arounds in {time.time() - t0:.3f} s')
 
             logger.info('Plotting airport safety - global')
