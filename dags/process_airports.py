@@ -13,7 +13,8 @@ import numpy as np
 import xarray as xr
 import pandas as pd
 import dask.dataframe as dd
-from dask.distributed import Cluster, LocalCluster
+from dask.distributed import LocalCluster
+from distributed.deploy import Cluster
 from sklearn.cluster import DBSCAN
 import pygmt
 import cartopy as cp
