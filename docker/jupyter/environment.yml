@@ -42,6 +42,7 @@ dependencies:
   - clickhouse-driver
 
   - dask
+  - dask-ml
 #  - modin-all
 #  - swifter
 #  - pandarallel
