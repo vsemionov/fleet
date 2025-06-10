@@ -45,6 +45,7 @@ dependencies:
   - dask
 #  - modin-all
 #  - swifter
+#  - pandarallel
 
   - pyspark=3.5
 
