@@ -21,6 +21,9 @@ AUTH_TOKENS_TABLE = 'auth_tokens'
 STATES_TABLE = 'states'
 CLEAN_STATES_TABLE = 'clean_states'
 
+FLIGHT_ENDPOINTS_VIEW = 'get_flight_endpoints'
+ALTITUDE_MINIMA_VIEW = 'get_altitude_minima'
+
 OPENSKY_AUTH_URL = 'https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token'
 OPENSKY_STATES_URL = 'https://opensky-network.org/api/states/all'
 OPENSKY_STATES_PARAMS = {'extended': 1}

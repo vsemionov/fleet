@@ -60,9 +60,9 @@ def process_airports():
         )
 
         longitude, latitude = client.execute(
-            "select longitude, latitude "
-            "from get_flight_endpoints(start_time=%(start_time)s, end_time=%(end_time)s) "
-            "where on_ground = true ",
+            f"select longitude, latitude "
+            f"from {config.FLIGHT_ENDPOINTS_VIEW}(start_time=%(start_time)s, end_time=%(end_time)s) "
+            f"where on_ground = true ",
             {'start_time': data_interval_start, 'end_time': data_interval_end},
             columnar=True,
         )
@@ -70,8 +70,8 @@ def process_airports():
         landings = landings.astype({'longitude': np.float64, 'latitude': np.float64})
 
         longitude, latitude, altitude = client.execute(
-            "select longitude, latitude, baro_altitude "
-            "from get_altitude_minima(start_time=%(start_time)s, end_time=%(end_time)s) ",
+            f"select longitude, latitude, baro_altitude "
+            f"from {config.ALTITUDE_MINIMA_VIEW}(start_time=%(start_time)s, end_time=%(end_time)s) ",
             {'start_time': data_interval_start, 'end_time': data_interval_end},
             columnar=True,
         )
