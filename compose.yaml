@@ -257,8 +257,9 @@ services:
   jupyter:
     <<: *common
     build: docker/jupyter
+    command: start-notebook.py --ip=0.0.0.0 --LabApp.token=''
     volumes:
-      - ./notebooks:/opt/fleet/notebooks
+      - .:/home/jovyan/work/fleet
     ports:
       - '127.0.0.1:8888:8888'
     hostname: jupyter

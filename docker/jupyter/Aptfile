@@ -1,21 +1,9 @@
 net-tools
 iputils-ping
-netbase
 curl
-wget
 less
+ssh
 git
 vim
-nano
 zip
 unzip
-bzip2
-graphviz
-fonts-liberation
-pandoc
-texlive-xetex
-texlive-fonts-recommended
-texlive-plain-generic
-cm-super
-dvipng
-#ffmpeg  # already installed in conda env

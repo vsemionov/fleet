@@ -1,24 +1,23 @@
-FROM condaforge/miniforge3:25.3.0-3
+FROM quay.io/jupyter/scipy-notebook:2025-06-02
 
 ARG JAVA_VERSION=17
 
-WORKDIR /opt/fleet
+USER root
 
-COPY Aptfile .
+COPY Aptfile /opt/fleet/
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        build-essential \
         openjdk-${JAVA_VERSION}-jre-headless \
-    && apt-get install -y $(cat Aptfile | grep -v '#') \
+    && apt-get install -y $(cat /opt/fleet/Aptfile | grep -v '#') \
     && apt-get autoremove -yqq --purge \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 ENV JAVA_HOME=/usr/lib/jvm/java-${JAVA_VERSION}-openjdk-amd64
 
-COPY environment.yml .
-RUN conda env create -f environment.yml \
-    && conda clean -afy
+USER ${NB_UID}
 
-EXPOSE 8888
-
-CMD ["/opt/conda/envs/fleet/bin/jupyter", "lab", "--allow-root", "--ip=0.0.0.0", "--LabApp.token="]
+COPY environment.yml /opt/fleet/
+RUN ln -s /opt/fleet/environment.yml /home/${NB_USER}/ \
+    && mamba env update -n base -f /home/${NB_USER}/environment.yml \
+    && mamba clean -afy \
+    && rm /home/${NB_USER}/environment.yml
