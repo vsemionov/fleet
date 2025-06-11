@@ -1,0 +1,26 @@
+x-airflow-common:
+  environment:
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:${AIRFLOW_DATABASE_PASSWORD:-airflow}@postgres/airflow
+    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/1
+
+
+services:
+  airflow-triggerer:
+    <<: *airflow-common
+    command: triggerer
+    hostname: airflow-triggerer
+    healthcheck:
+      <<: *airflow-common-healthcheck
+      test: timeout 10 airflow jobs check --job-type TriggererJob --local >/dev/null || exit 1
+
+  airflow-worker:
+    <<: *airflow-common
+    command: celery worker
+    environment:
+      <<: *airflow-common-env
+      DUMB_INIT_SETSID: 0
+    hostname: airflow-worker
+    healthcheck:
+      <<: *airflow-common-healthcheck
+      test: timeout 10 celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$$HOSTNAME" >/dev/null || exit 1
