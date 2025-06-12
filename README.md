@@ -1,6 +1,11 @@
 # Fleet
 
 Fleet is an air traffic analysis system.
+
+![europe](https://github.com/user-attachments/assets/c96b7004-cbfb-4928-9e4a-82e278a98877)
+
+![europe](https://github.com/user-attachments/assets/7e92ab66-40bb-48aa-a06d-a9c59c4fdea9)
+
 It uses data from OpenSky Network, consisting of the states of individual aircraft at different points in time.
 Aircraft are uniquely identified by their ICAO codes (six hexadecimal character strings).
 Their states consist of position (as WGS 84 latitude and longitude), altitude, velocity, and whether they are on the ground.
@@ -12,6 +17,9 @@ This makes it possible, without additional sources of information, and with dece
 
 ## Analyses
 ### Airport safety
+![global](https://github.com/user-attachments/assets/715ad3b6-e068-46ab-aeb2-92f0cdebb42b)
+![united_states](https://github.com/user-attachments/assets/8e3dff3c-2dfb-44a7-a050-748e185571e7)
+
 Goal - compute a risk factor for every airport.
 The risk factor is defined as the ratio of the number of go-around maneuvers near an airport, to the number of landings on the airport.
 A go-around maneuver is performed when a landing is not going by plan, and therefore indicates difficulty.
@@ -51,6 +59,10 @@ Perhaps, the criteria to consider an altitude minimum to be a go-around (altitud
 should depend on the size of the airport.
 
 ### Traffic density
+![global](https://github.com/user-attachments/assets/f70a4e80-6f10-40fa-b220-4c982c1dc14c)
+![united_states](https://github.com/user-attachments/assets/3770af53-62da-4769-a4c5-1dedb4374562)
+
+
 Unfortunately, traffic above the oceans cannot be seen here.
 The data is collected by a network of volunteers, using ADS-B receivers, which (to my knowledge) have a typical range of 250 km.
 Hence the gaps over water, and the incomplete country coverage.
