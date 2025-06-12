@@ -156,3 +156,17 @@ This is a small hobby project, based on limited publicly available data.
 Please do not take my method, results, and interpretation too seriously.
 I like algorithms and data, but I am not an aviation or travel expert.
 If you see room for correction or improvement, please let me know, for example by opening an issue.
+
+
+## Credits
+In addition to the data source, the services listed in Architecture, and the programming language (Python),
+Fleet works thanks to the following awesome open source projects:
+* Cartopy - map projections and beautiful plots
+* Datashader - fast big data visualization
+* Matplotlib - base for all charts
+* NumPy - fast number crunching
+* Pandas - structured data processing
+* PyGMT - easy access to Earth datasets
+* Seaborn - statistical visualizations (in notebooks)
+* Scikit-learn - machine learning algorithms (DBSCAN)
+* Xarray, SciPy - geospatial data processing (multivariate interpolation)
