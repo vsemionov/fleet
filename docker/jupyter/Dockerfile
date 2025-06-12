@@ -7,6 +7,7 @@ USER root
 COPY Aptfile /opt/fleet/
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
+        build-essential \
         openjdk-${JAVA_VERSION}-jre-headless \
     && apt-get install -y $(cat /opt/fleet/Aptfile | grep -v '#') \
     && apt-get autoremove -yqq --purge \
