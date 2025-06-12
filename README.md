@@ -6,7 +6,9 @@ Fleet is an air traffic analysis system.
 
 ![traffic density europe](https://github.com/user-attachments/assets/7e92ab66-40bb-48aa-a06d-a9c59c4fdea9)
 
-It uses data from OpenSky Network, consisting of the states of individual aircraft at different points in time.
+Click the above images to view full scale maps.
+
+Fleet uses data from OpenSky Network, consisting of the states of individual aircraft at different points in time.
 Aircraft are uniquely identified by their ICAO codes (six hexadecimal character strings).
 Their states consist of position (as WGS 84 latitude and longitude), altitude, velocity, and whether they are on the ground.
 The states of all currently active aircraft are pulled every 90 seconds.
