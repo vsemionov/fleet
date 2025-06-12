@@ -68,7 +68,21 @@ Unfortunately, traffic above the oceans cannot be seen here.
 The data is collected by a network of volunteers, using ADS-B receivers, which (to my knowledge) have a typical range of 250 km.
 Hence the gaps over water, and the incomplete country coverage.
 
-All plots were generated with data from Jun 10, 2025.
+All plots above were generated with data from Jun 10, 2025.
+
+### Other visualizations
+The below charts are implemented as a Superset dashboard.
+
+![Screenshot 2025-06-12 at 09-55-18 Main](https://github.com/user-attachments/assets/65e66020-b3a6-4090-991d-981ab9f7df57)
+![Screenshot 2025-06-12 at 09-55-30 Main](https://github.com/user-attachments/assets/62d95c03-ad23-4492-90a8-6f9ed122b92c)
+![Screenshot 2025-06-12 at 09-55-40 Main](https://github.com/user-attachments/assets/4615c362-865a-4a81-89ee-9e5160b282e9)
+![Screenshot 2025-06-12 at 09-55-49 Main](https://github.com/user-attachments/assets/916ddfa6-034f-4b6a-b00a-3d32ac06585c)
+![Screenshot 2025-06-12 at 09-57-36 Main](https://github.com/user-attachments/assets/4c8a0f75-3f9e-4bc8-befb-9c531f8ea84f)
+![Screenshot 2025-06-12 at 09-57-57 Main](https://github.com/user-attachments/assets/6b1468f7-0dff-4ddc-b9d9-6774938561a8)
+![Screenshot 2025-06-12 at 10-05-18 Main](https://github.com/user-attachments/assets/aa1f13a0-5ce2-488f-b7d0-aa114f392518)
+![Screenshot 2025-06-12 at 10-05-24 Main](https://github.com/user-attachments/assets/011a0fc5-6d8b-42c8-bd75-65960e386849)
+![Screenshot 2025-06-12 at 10-05-35 Main](https://github.com/user-attachments/assets/79248747-fdff-4a42-aec0-9d37701a123a)
+![Screenshot 2025-06-12 at 10-05-42 Main](https://github.com/user-attachments/assets/31f2180c-0a18-4e60-8868-227d3705d18b)
 
 
 ## Software
