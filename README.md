@@ -122,6 +122,8 @@ Assuming Fleet is running on your computer, you can:
 * View the Superset dashboard at `http://localhost:8088/`
 * Access Airflow at `http://localhost:8080/`
 
+The default credentials are `admin/admin` everywhere except for Airflow (`airflow/airflow`).
+
 However, it takes time for data to be collected to have anything to visualize.
 I run Fleet on a remote server to collect data.
 Ports are opened only on the loopback network interface (localhost).
