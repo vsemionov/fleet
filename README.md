@@ -7,13 +7,13 @@ Their states consist of position (as WGS 84 latitude and longitude), altitude, v
 The states of all currently active aircraft are pulled every 90 seconds.
 
 Fleet analyses the data by partitioning it into individual ICAO codes, and ordering the resulting states by time.
-This makes it possible, without additional sources of information, and with decent accuracy, to infer flights and airports.
+This makes it possible, without additional sources of information, and with decent accuracy, to infer flights and airports around the world.
 
 
 ## Analyses
 ### Airport safety
-Compute a risk factor for every airport.
-The risk factor is defined as the ratio of go-around maneuvers near an airport to the number of landings on the airport.
+Goal - compute a risk factor for every airport.
+The risk factor is defined as the ratio of the number of go-around maneuvers near an airport, to the number of landings on the airport.
 A go-around maneuver is performed when a landing is not going by plan, and therefore indicates difficulty.
 High ratios of go-arounds to landings indicate (in my understanding) frequent problems during landing approaches.
 
@@ -21,7 +21,7 @@ Airport locations are inferred from clusters of landing points.
 Go-arounds are inferred from descents followed by climbs without landing, close to an airport and close to ground level.
 More formally:
 > Airport locations are inferred by computing clusters of positions,
-> where an aircraft's status changes from airborne to on-ground, and averaging the coordinates of each cluster's points.
+> where an aircraft's status changes from airborne to on-ground, and averaging the coordinates of each cluster's member points.
 > The DBSCAN algorithm is used, because the number of clusters (airports) is not known in advance.
 > It is performed in Robinson projection,
 > as a compromise to maintain similar scale globally and use Euclidian distance in a single pass.
@@ -36,16 +36,16 @@ More formally:
 
 #### Observations
 Most major airports have very low risk factors, as expected.
-However, in Europe, London Heathrow airport is a notable exception.
-I am unaware if this is the case in reality, or is just an artifact of how I define and compute the risk factor.
+However, in Europe, London Heathrow airport is a notable exception with relatively high risk.
+I am unaware if this is the case in reality, or is just an artifact of how I define and compute risk.
 
-The results for the United are similar.
-The largest airports seem very safe,
-but there are a few mid-size airports with significant risk factors, especially in the West half of the country.
+The results for the United States are similar.
+The largest airports seem very safe, but there are a few mid-size airports with significant risk factors,
+especially in the West part of the country.
 
-High risk factors are typically present in small airports.
+High risk factors correlate with small airports.
 On one hand, this could be due to lack of modern automation for precision landings, like ILS.
-But, it could also be just because the typical flights around in these areas follow less strict plans (if any).
+But, it could also be just because the typical flights in these areas follow less strict plans (if any).
 Think Cessnas, not Boeings and Airbuses.
 Perhaps, the criteria to consider an altitude minimum to be a go-around (altitude AGL and distance to airport)
 should depend on the size of the airport.
@@ -76,7 +76,7 @@ Alternatively, you will need to change the data pull period from 90 seconds to 1
 (quotas for registered and anonymous users, respectively).
 After creating an account, create an API credential.
 
-Additionally, you will also need a MapBox API key, to display map tiles in the Superset dashboard.
+You will also need a MapBox API key, to display map tiles in the Superset dashboard.
 At the time of writing, this is also free under a certain usage limit, but it does require a credit card.
 Alternatively, you can just skip it if you don't need map visualizations.
 
@@ -98,7 +98,8 @@ When this finishes, monitor the output of `docker compose ps`, and when all serv
 ```shell
 bin/deploy.sh
 ```
-After the last step finishes, you will no longer need your virtual environment, and you can delete it.
+The last step imports necessary configurations and data.
+After this finishes, you will no longer need your virtual environment, and you can delete it.
 
 ### Usage
 Assuming Fleet is running on your computer, you can:
@@ -108,8 +109,8 @@ Assuming Fleet is running on your computer, you can:
 
 However, it takes time for data to be collected to have anything to visualize.
 I run Fleet on a remote server to collect data.
-On the machine running Fleet, ports are opened only on the loopback network interface (localhost).
-To access its services, you can connect to the host server via SSH and tunnel the needed ports:
+Ports are opened only on the loopback network interface (localhost).
+To access Fleet's services, you can connect to the host server via SSH and tunnel the needed ports:
 ```shell
 ssh -N -L 8080:localhost:8080 -L 8088:localhost:8088 user@host
 ```
@@ -117,3 +118,10 @@ Keep this running, and then point your browser to `http://localhost:8088/` or `h
 
 To view the periodically generated visualizations on the server's filesystem (not the dashboards),
 you can either copy them from the server (using `scp`), or mount them to your computer via `sshfs`.
+
+
+## Disclaimer
+This is a small hobby project, based on limited publicly available data.
+Please do not take my method, results, and interpretation too seriously.
+I like algorithms and data, but I am not an aviation or travel expert.
+If you see room for correction or improvement, please let me know, for example by opening an issue.
