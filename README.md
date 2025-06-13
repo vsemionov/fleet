@@ -150,13 +150,6 @@ To view the periodically generated visualizations on the server's filesystem (no
 you can either copy them from the server (using `scp`), or mount them to your computer via `sshfs`.
 
 
-## Disclaimer
-This is a small hobby project, based on limited publicly available data.
-Please do not take my method, results, and interpretation too seriously.
-I like algorithms and data, but I am not an aviation or travel expert.
-If you see room for correction or improvement, please let me know, for example by opening an issue.
-
-
 ## Credits
 In addition to the data source, the services listed in Architecture, and the programming language (Python),
 Fleet works thanks to the following awesome open source projects:
