@@ -47,13 +47,14 @@ More formally:
 #### Observations
 Most major airports have very low risk factors, as expected.
 However, in Europe, London Heathrow airport is a notable exception with relatively high risk.
-I am unaware if this is the case in reality, or is just an artifact of how I define and compute risk.
+This is an unexpected result, but the analysis whether this is the case in reality,
+or is just an artifact of how I define and compute risk, is deferred for future work.
 
 The results for the United States are similar.
 The largest airports seem very safe, but there are a few mid-size airports with significant risk factors,
 especially in the West part of the country.
 
-High risk factors correlate with small airports.
+High risk factors are typical for small airports.
 On one hand, this could be due to lack of modern automation for precision landings, like ILS.
 But, it could also be just because the typical flights in these areas follow less strict plans (if any).
 Think Cessnas, not Boeings and Airbuses.
@@ -101,7 +102,7 @@ Fleet runs in a set of Docker containers:
 ### Installation
 If you want to run Fleet, first you will need an OpenSky Network account (which is free).
 Alternatively, you will need to change the data pull period from 90 seconds to 15 minutes
-(quotas for registered and anonymous users, respectively).
+(corresponding to quotas for registered and anonymous users, respectively).
 After creating an account, create an API credential.
 
 You will also need a MapBox API key, to display map tiles in the Superset dashboard.
@@ -118,7 +119,7 @@ and install the necessary dependencies by running:
 ```shell
 pip install -r requirements.txt
 ```
-Next, build and start the docker containers with:
+Next, build and start the Docker containers with:
 ```shell
 docker compose up -d
 ```
@@ -150,8 +151,8 @@ To view the periodically generated visualizations on the server's filesystem (no
 you can either copy them from the server (using `scp`), or mount them to your computer via `sshfs`.
 
 
-## Credits
-In addition to the data source, the services listed in Architecture, and the programming language (Python),
+## Acknowledgements
+In addition to the data source, the services listed in *Architecture*, and the programming language (Python),
 Fleet works thanks to the following awesome open source projects:
 * Cartopy - map projections and beautiful plots
 * Datashader - fast big data visualization
